@@ -1,9 +1,4 @@
-Thanks for downloading this theme!
-
-Theme Name: Flexor
-Theme URL: https://bootstrapmade.com/flexor-free-multipurpose-bootstrap-template/
-Author: BootstrapMade.com
-Author URL: https://bootstrapmade.com
+based on the theme: https://bootstrapmade.com/flexor-free-multipurpose-bootstrap-template/
 
 ----------------------------
 CONTENT OF THIS FILE
@@ -15,16 +10,6 @@ CONTENT OF THIS FILE
  * Customisation
  * Credits
  * Issues & bug reporting
-
-
-----------------------------
-THEME INFO
-----------------------------
-
-Name: Flexor
-Version: Lite
-Released: Dec 2015
-Bootstrap version: 3.x
 
 
 ----------------------------
