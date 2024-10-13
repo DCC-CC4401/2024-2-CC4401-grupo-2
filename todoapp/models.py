@@ -8,6 +8,16 @@ from categorias.models import Categoria
 from django.contrib.auth.models import AbstractUser
 
 
+class Restaurant(models.Model):
+    name = models.CharField(max_length=100)
+    address = models.CharField(max_length=100)
+    phone = models.CharField(max_length=12)
+    email = models.EmailField()
+    website = models.URLField()
+    description = models.TextField()
+    Categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE) # la llave foránea
+    
+    
 class Tarea(models.Model):  # Todolist able name that inherits models.Model
     titulo = models.CharField(max_length=250)  # un varchar
     contenido = models.TextField(blank=True)  # un text
