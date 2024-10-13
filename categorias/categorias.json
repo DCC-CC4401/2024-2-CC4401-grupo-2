@@ -3,28 +3,28 @@
     "model": "categorias.categoria",
     "pk": 1,
     "fields": {
-        "nombre": "Lenguajes"
+        "nombre": "Mexicana"
     }
 },
 {
     "model": "categorias.categoria",
     "pk": 2,
     "fields": {
-        "nombre": "Ingeniería de software"
+        "nombre": "Japonesa"
     }
 },
 {
     "model": "categorias.categoria",
     "pk": 3,
     "fields": {
-        "nombre": "Arquitectura"
+        "nombre": "Italiana"
     }
 },
 {
     "model": "categorias.categoria",
     "pk": 4,
     "fields": {
-        "nombre": "Sistemas operativos"
+        "nombre": "Vegana"
     }
 }
 ]
