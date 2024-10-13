@@ -20,5 +20,5 @@ class Tarea(models.Model):  # Todolist able name that inherits models.Model
 class User(AbstractUser):
     pronombres = [('La','La'),('El','El'),('Le','Le'),('Otro','Otro')]
     pronombre = models.CharField(max_length=5,choices=pronombres)
-    apodo= models.CharField(max_length=30)
     
+
