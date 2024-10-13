@@ -4,6 +4,8 @@ from django.shortcuts import render, redirect
 # Create your views here.
 from todoapp.models import Tarea
 from categorias.models import Categoria
+from todoapp.models import User
+from django.http import HttpResponseRedirect
 
 
 def tareas(request):  # the index view
@@ -22,3 +24,16 @@ def tareas(request):  # the index view
             nueva_tarea = Tarea(titulo=titulo, contenido=contenido, categoria=categoria)  # Crear la tarea
             nueva_tarea.save()  # guardar la tarea en la base de datos.
             return redirect("/tareas")  # recargar la página.
+
+def register_user(request):
+    if request.method == 'GET':
+        return render(request, "todoapp/register.html")
+    elif request.method == 'POST':
+        nombre = request.POST['nombre']
+        contraseña = request.POST['contraseña']
+        pronombre = request.POST['pronombre']
+        mail = request.POST['mail']
+
+        user = User.objects.create_user(username=nombre, password= contraseña, email=mail, pronombre=pronombre)
+        return HttpResponseRedirect('/tareas')
+        
