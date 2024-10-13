@@ -946,7 +946,7 @@
 
 @media (min-width: 960px) {
   .item-slider {
-    height: 380px;
+    height: 85vh;
   }
 }
 
@@ -1636,7 +1636,7 @@ a.btn-hh-trigger.target-open:after {
   margin-top: -20px;
 }
 #footer {
-  min-height: 400px;
+  min-height: 200px;
   color: #999;
 }
 #footer h1,
