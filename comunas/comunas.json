@@ -1,0 +1,38 @@
+[
+    {
+        "model": "comunas.comuna",
+        "pk": 1,
+        "fields": {
+            "nombre": "Santiago"
+        }
+    },
+    {
+        "model": "comunas.comuna",
+        "pk": 2,
+        "fields": {
+            "nombre": "Providencia"
+        }
+    },
+    {
+        "model": "comunas.comuna",
+        "pk": 3,
+        "fields": {
+            "nombre": "Las Condes"
+        }
+    },
+    {
+        "model": "comunas.comuna",
+        "pk": 4,
+        "fields": {
+            "nombre": "Ñuñoa"
+        }
+    }
+
+    {
+        "model": "comunas.comuna",
+        "pk": 5,
+        "fields": {
+            "nombre": "La Florida"
+        }
+    }
+]
