@@ -15,8 +15,7 @@ class Restaurant(models.Model):
     email = models.EmailField()
     website = models.URLField()
     description = models.TextField()
-    Categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE) # la llave foránea
-    
+    categorias = models.ManyToManyField(Categoria) # Relación muchos a muchos con la tabla categorias
     
 class Tarea(models.Model):  # Todolist able name that inherits models.Model
     titulo = models.CharField(max_length=250)  # un varchar
