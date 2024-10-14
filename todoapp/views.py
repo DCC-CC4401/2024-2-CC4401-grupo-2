@@ -1,31 +1,13 @@
 # Create your views here.
 from django.shortcuts import render, redirect
-from todoapp.models import Tarea
 from categorias.models import Categoria
 from comunas.models import Comuna
 from todoapp.models import Restaurant
 from todoapp.forms import RestaurantForm
 from todoapp.models import User
 from django.http import HttpResponseRedirect
+from django.contrib.auth import authenticate, login,logout
 
-
-
-def tareas(request):  # the index view
-    mis_tareas = Tarea.objects.all()  # quering all todos with the object manager
-    categorias = Categoria.objects.all()  # getting all categories with object manager
-
-    if request.method == "GET":
-        return render(request, "todoapp/index.html", {"tareas": mis_tareas, "categorias": categorias})
-
-    if request.method == "POST":  # revisar si el método de la request es POST
-        if "taskAdd" in request.POST:  # verificar si la request es para agregar una tarea (esto está definido en el button)
-            titulo = request.POST["titulo"]  # titulo de la tarea
-            nombre_categoria = request.POST["selector_categoria"]  # nombre de la categoria
-            categoria = Categoria.objects.get(nombre=nombre_categoria)  # buscar la categoría en la base de datos
-            contenido = request.POST["contenido"]  # contenido de la tarea
-            nueva_tarea = Tarea(titulo=titulo, contenido=contenido, categoria=categoria)  # Crear la tarea
-            nueva_tarea.save()  # guardar la tarea en la base de datos.
-            return redirect("/tareas")  # recargar la página.
 
 """
 Vista para registrar un nuevo usuario en el sistema.
@@ -47,7 +29,7 @@ def register_user(request):
         mail = request.POST['mail']
 
         user = User.objects.create_user(username=nombre, password= contraseña, email=mail, pronombre=pronombre)
-        return HttpResponseRedirect('/tareas')
+        return HttpResponseRedirect('/restaurant_list')
     
         
 """
@@ -68,7 +50,7 @@ def add_restaurant(request):
         form = RestaurantForm(request.POST)
         if form.is_valid():
             form.save()  # Guardar el restaurante si los datos son válidos
-            return HttpResponseRedirect('/tareas')  # Redirigir a la página de tareas
+            return HttpResponseRedirect('/restaurant_list')  # Redirigir a la página de lista de restaurante
         else:
             return render(request, 'todoapp/register_restaurant.html', {'form': form})
 
@@ -97,3 +79,21 @@ def restaurant_list(request):
         'comunas': comunas,
         'categorias': categorias,  # Incluir categorías en el contexto
     })
+
+
+def login_user(request):
+    if request.method == 'GET':
+        return render(request,"todoapp/login.html")
+    if request.method == 'POST':
+        username = request.POST['username']
+        contraseña = request.POST['contraseña']
+        usuario = authenticate(username=username,password=contraseña)
+        if usuario is not None:
+            login(request,usuario)
+            return HttpResponseRedirect('/restaurant_list')
+        else:
+            return HttpResponseRedirect('/register')
+
+def logout_user(request):
+    logout(request)
+    return HttpResponseRedirect('/restaurant_list')
