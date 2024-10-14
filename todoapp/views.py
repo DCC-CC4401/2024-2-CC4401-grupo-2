@@ -1,12 +1,9 @@
 # Create your views here.
 from django.shortcuts import render, redirect
-
-# Create your views here.
 from todoapp.models import Tarea
 from categorias.models import Categoria
 from todoapp.models import Restaurant
 from todoapp.forms import RestaurantForm
-
 from todoapp.models import User
 from django.http import HttpResponseRedirect
 
@@ -29,6 +26,16 @@ def tareas(request):  # the index view
             nueva_tarea.save()  # guardar la tarea en la base de datos.
             return redirect("/tareas")  # recargar la página.
 
+"""
+Vista para registrar un nuevo usuario en el sistema.
+
+- Si el método es 'GET', se muestra el formulario de registro de usuario.
+- Si el método es 'POST', se obtiene la información del formulario y 
+  se crea un nuevo usuario con los datos proporcionados (nombre, contraseña, pronombre y correo electrónico).
+
+Argumento:
+- request: La solicitud HTTP recibida por el servidor.
+"""
 def register_user(request):
     if request.method == 'GET':
         return render(request, "todoapp/register.html")
@@ -40,8 +47,18 @@ def register_user(request):
 
         user = User.objects.create_user(username=nombre, password= contraseña, email=mail, pronombre=pronombre)
         return HttpResponseRedirect('/tareas')
+    
         
+"""
+Vista para agregar un nuevo restaurante al sistema.
 
+- Si el método es 'GET', se muestra un formulario vacío para registrar un restaurante.
+- Si el método es 'POST', se procesa el formulario y se guarda la información del restaurante 
+  si los datos son válidos. Si no lo son, se vuelve a mostrar el formulario.
+
+Argumento:
+- request: La solicitud HTTP recibida por el servidor.
+"""
 def add_restaurant(request):
     if request.method == 'GET':
         form = RestaurantForm()  # Cargar el formulario vacío
