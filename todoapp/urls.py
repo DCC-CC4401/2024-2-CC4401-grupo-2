@@ -7,4 +7,5 @@ urlpatterns = [
     path('restaurant_list', views.restaurant_list, name='restaurant_list'),
     path('login', views.login_user, name='login'),
     path('logout',views.logout_user, name='logout'),
+    path('restaurant/<int:restaurant_id>/', views.restaurant_detail, name='restaurant_detail'),
 ]
