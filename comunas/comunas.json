@@ -26,11 +26,7 @@
         "fields": {
             "nombre": "Ñuñoa"
         }
-<<<<<<< HEAD
     },
-=======
-    }
->>>>>>> 3216aed595d8181f01e3f020763fc8353b330a99
 
     {
         "model": "comunas.comuna",

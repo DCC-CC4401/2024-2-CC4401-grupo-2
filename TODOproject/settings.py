@@ -140,3 +140,4 @@ STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
 #STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 AUTH_USER_MODEL = 'todoapp.User'
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

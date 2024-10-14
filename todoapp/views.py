@@ -4,8 +4,12 @@ from django.shortcuts import render, redirect
 # Create your views here.
 from todoapp.models import Tarea
 from categorias.models import Categoria
+from todoapp.models import Restaurant
+from todoapp.forms import RestaurantForm
+
 from todoapp.models import User
 from django.http import HttpResponseRedirect
+
 
 
 def tareas(request):  # the index view
@@ -37,3 +41,15 @@ def register_user(request):
         user = User.objects.create_user(username=nombre, password= contraseña, email=mail, pronombre=pronombre)
         return HttpResponseRedirect('/tareas')
         
+
+def add_restaurant(request):
+    if request.method == 'GET':
+        form = RestaurantForm()  # Cargar el formulario vacío
+        return render(request, 'todoapp/register_restaurant.html', {'form': form})
+    elif request.method == 'POST':
+        form = RestaurantForm(request.POST)
+        if form.is_valid():
+            form.save()  # Guardar el restaurante si los datos son válidos
+            return HttpResponseRedirect('/tareas')  # Redirigir a la página de tareas
+        else:
+            return render(request, 'todoapp/register_restaurant.html', {'form': form})
