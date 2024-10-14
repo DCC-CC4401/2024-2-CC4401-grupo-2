@@ -12,3 +12,6 @@ Vesperr Free Website Template - Free-CSS.com/
 bootstrap-5.3.3-dist/
 tarea/
 venv/
+__pycache__/
+*.pyc
+db.sqlite3
