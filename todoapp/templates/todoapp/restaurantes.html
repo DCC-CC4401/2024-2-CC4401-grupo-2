@@ -32,7 +32,7 @@
             <div class="col-md-4"> <!-- Columna para la lista de restaurantes -->
                 <form method="GET" action="">
                     <label for="comuna">Filtrar por comuna:</label>
-                    <select name="comuna" id="comuna" onchange="this.form.submit()">
+                    <select name="comuna" id="comuna" onchange="this.form.submit()" class="form-control">
                         <option value="">Todas las comunas</option>
                         {% for comuna in comunas %}
                             <option value="{{ comuna.id }}" {% if request.GET.comuna == comuna.id|stringformat:"s" %}selected{% endif %}>
@@ -42,7 +42,7 @@
                     </select>
 
                     <label for="categoria">Filtrar por categoría:</label>
-                    <select name="categoria" id="categoria" onchange="this.form.submit()">
+                    <select name="categoria" id="categoria" onchange="this.form.submit()" class="form-control">
                         <option value="">Todas las categorías</option>
                         {% for categoria in categorias %}
                             <option value="{{ categoria.id }}" {% if request.GET.categoria == categoria.id|stringformat:"s" %}selected{% endif %}>
@@ -55,11 +55,15 @@
                 <div class="list-group mt-3"> <!-- Lista de restaurantes -->
                     {% for restaurant in restaurantes %}
                         <div class="list-group-item">
-                            <h5 class="mb-1">{{ restaurant.name }}</h5>
+                            <h5 class="mb-1">
+                                <a href="{% url 'restaurant_detail' restaurant.id %}">
+                                    {{ restaurant.name }}
+                                </a>
+                            </h5>
                             <p class="mb-1"><strong>Dirección:</strong> {{ restaurant.address }}</p>
                             <p class="mb-1"><strong>Teléfono:</strong> {{ restaurant.phone }}</p>
                             <p class="mb-1"><strong>Correo:</strong> {{ restaurant.email }}</p>
-                            <p class="mb-1"><strong>Sitio web:</strong> <a href="{{ restaurant.website }}">{{ restaurant.website }}</a></p>
+                            <p class="mb-1"><strong>Sitio web:</strong>{{ restaurant.website }}</p>
                             <p class="mb-1"><strong>Descripción:</strong> {{ restaurant.description }}</p>
                             <p class="mb-1"><strong>Categorías:</strong>
                                 {% for categoria in restaurant.categorias.all %}
