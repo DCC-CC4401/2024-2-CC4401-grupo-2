@@ -2,6 +2,7 @@
 from django.shortcuts import render, redirect
 from todoapp.models import Tarea
 from categorias.models import Categoria
+from comunas.models import Comuna
 from todoapp.models import Restaurant
 from todoapp.forms import RestaurantForm
 from todoapp.models import User
@@ -70,3 +71,10 @@ def add_restaurant(request):
             return HttpResponseRedirect('/tareas')  # Redirigir a la página de tareas
         else:
             return render(request, 'todoapp/register_restaurant.html', {'form': form})
+
+
+
+def restaurant_list(request):
+    restaurantes = Restaurant.objects.all()
+    if request.method == 'GET':
+        return render(request, "todoapp/restaurantes.html", {'restaurantes': restaurantes})

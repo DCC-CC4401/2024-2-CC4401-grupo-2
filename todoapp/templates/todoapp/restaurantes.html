@@ -12,57 +12,16 @@
             <h1>Mapa de comidas</h1>
             <p class="tagline">Busca tu antojo</p>
             <!-- Fin encabezado -->
-            <form action="" method="post">
-                {% csrf_token %} <!-- csrf token for basic security -->
-                   <!-- Formulario de nueva tarea-->
-                <div class="form-group">
-                    <label for="name">Nombre del Restaurante</label>
-                    <input type="text" id="name" class="form-control" placeholder="Nombre" name="name" required>
-                </div>
-                <div class="form-group">
-                    <label for="address">Dirección</label>
-                    <textarea  id="address" class="form-control" placeholder="Dirección" name="address" required></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="categorias">Categoria</label>
-                    <select id="categorias"  class="form-control" name="categorias" multiple>
-                    <option class="disabled" value="">Elige categorías</option>
-                    {% for categoria in categorias %}
-                       <option class="" value="{{ categoria.nombre }}" name="{{ categoria.nombre }}">{{ categoria.nombre }}</option>
-                    {% endfor %}
-                    </select>
-                </div>
-                <div>
-                    <label for="phone">Número de teléfono</label>
-                    <input type="text" id="phone" class="form-control" placeholder="" name="phone" required>
-                </div>
-                <div>
-                    <label for="email">Mail de Contacto</label>
-                    <input type="text" id="email" class="form-control" placeholder="" name="email" required>
-                </div>
-                <div>
-                    <label for="website">Sitio Web</label>
-                    <input type="text" id="website" class="form-control" placeholder="" name="website" required>
-                </div>
-                <div>
-                    <label for="description">Descripción</label>
-                    <input type="text" id="description" class="form-control" placeholder="" name="description" required>
-                </div>
-                <!-- Fin formulario de nueva tarea -->
-                <!-- Botones para agregar o eliminar tarea -->
-                <div class="row">
-                    <button class="btn btn-primary" name="restaurantAdd" type="submit"><i class="fa fa-plus icon"></i>Agregar restaurante</button>
-                    <button disabled class="btn btn-danger" name="restaurantDelete" formnovalidate="" type="submit" onclick="$('input#sublist').click();"><i class="fa fa-trash-o icon"></i>Eliminar restaurante</button>
-                </div>
-                <!-- Fin botones para agregar o eliminar tarea -->
                  <!-- Lista de las tareas existentes -->
                 <ul class="taskList">
-                {% for restaurante in restaurantes %} <!-- django template lang - for loop -->
-                    <li class="taskItem">
-                        <input type="checkbox" class="taskCheckbox" name="checkedbox" id="{{ restaurant.id }}" value="{{ restaurant.id }}">
-                        <label for="{{ restaurant.id }}"><span class="complete-">{{ restaurant.name }}</span></label>
-                        <span class="categoria-{{ restaurant.categoria }}">{{ restaurant.categoria }}</span>
+                {% for restaurant in restaurantes %} <!-- django template lang - for loop -->
+                    <li class="unstyled">
+                        <h4 for="{{ restaurant.id }}"><span class="complete-">{{ restaurant.name }}</span></h4>
+                            {% for categoria in restaurant.categorias.all %}
+                                <span style="border:thin solid grey; background-color:lightgrey" class="categoria-{{ restaurant.categorias }}"> {{categoria}} </span>
+                            {% endfor %}
                     </li>
+
                 {% endfor %}
                 </ul>
             <!-- Fin de la lista de tareas existentes-->
