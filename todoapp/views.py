@@ -1,12 +1,13 @@
 # Create your views here.
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect,get_object_or_404
 from categorias.models import Categoria
 from comunas.models import Comuna
-from todoapp.models import Restaurant
-from todoapp.forms import RestaurantForm
+from todoapp.models import Restaurant, Review
+from todoapp.forms import RestaurantForm, ReviewForm
 from todoapp.models import User
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login,logout
+from django.contrib.auth.decorators import login_required
 
 
 """
@@ -97,3 +98,26 @@ def login_user(request):
 def logout_user(request):
     logout(request)
     return HttpResponseRedirect('/restaurant_list')
+
+
+
+def restaurant_detail(request, restaurant_id):
+    restaurant = get_object_or_404(Restaurant, id=restaurant_id)
+    reviews = restaurant.reviews.all()
+
+    if request.method == 'POST' and request.user.is_authenticated:
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.restaurant = restaurant
+            review.user = request.user
+            review.save()
+            return redirect('restaurant_detail', restaurant_id=restaurant.id)
+    else:
+        form = ReviewForm()
+
+    return render(request, 'todoapp/restaurant_detail.html', {
+        'restaurant': restaurant,
+        'reviews': reviews,
+        'form': form
+    })
