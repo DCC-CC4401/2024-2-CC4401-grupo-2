@@ -37,5 +37,8 @@
     {% else %}
         <p>Por favor <a href="{% url 'login' %}">inicia sesión</a> para poder dejar un comentario.</p>
     {% endif %}
+    <div class="mt-4">
+        <a href="{% url 'restaurant_list' %}" class="btn">Volver a la lista de restaurantes</a>
+    </div>
 </body>
 </html>
