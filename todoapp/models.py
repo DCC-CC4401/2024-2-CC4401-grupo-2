@@ -1,13 +1,22 @@
 from django.db import models
-
-# Create your models here.
 from django.utils import timezone
-
 from categorias.models import Categoria
-
 from django.contrib.auth.models import AbstractUser
 
 
+
+"""
+Modelo para representar un restaurante en nuestra aplicación web.
+A continuación se listan las características que tiene este modelo:
+
+- name: Nombre del restaurante.
+- address: Dirección del restaurante .
+- phone: Número de teléfono del restaurante .
+- email: Correo del restaurante.
+- website: Url del sitio web del restaurante .
+- description: Descripción del restaurante.
+- categorias: Categorías que cumple el restaurante (comida vegana, por ejemplo).
+"""
 class Restaurant(models.Model):
     name = models.CharField(max_length=100)
     address = models.CharField(max_length=100)
@@ -25,6 +34,15 @@ class Tarea(models.Model):  # Todolist able name that inherits models.Model
 
     def __str__(self):
         return self.titulo  # name to be shown when called
+
+"""
+Modelo para representar a un usuario de nuestra aplicación web,
+creado en base al modelo `AbstractUser` de Django.
+
+Características añadidas:
+- pronombre: Pronombre elegido por el usuario.
+    Se elige entre las siguientes opciones: 'La', 'El', 'Le', 'Otro'.
+"""
 
 class User(AbstractUser):
     pronombres = [('La','La'),('El','El'),('Le','Le'),('Otro','Otro')]
