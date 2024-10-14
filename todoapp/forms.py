@@ -4,4 +4,4 @@ from .models import Restaurant
 class RestaurantForm(forms.ModelForm):
     class Meta:
         model = Restaurant
-        fields = ['name', 'address', 'phone', 'email', 'website', 'description', 'categorias']
+        fields = ['name', 'address', 'phone', 'email', 'website', 'description', 'categorias', 'comuna']

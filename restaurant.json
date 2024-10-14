@@ -1,0 +1,87 @@
+[
+  {
+    "model": "todoapp.restaurant",
+    "pk": 1,
+    "fields": {
+      "name": "Restaurante Vegano Saludable",
+      "address": "Calle Vegana 123",
+      "phone": "1234567890",
+      "email": "vegano@restaurant.com",
+      "website": "http://veganosaludable.com",
+      "description": "Un restaurante con opciones 100% veganas y saludables.",
+      "comuna": 1,
+      "categorias": [4, 1]
+    }
+  },
+  {
+    "model": "todoapp.restaurant",
+    "pk": 2,
+    "fields": {
+      "name": "Pizzeria Italiana Gourmet",
+      "address": "Avenida Italia 456",
+      "phone": "0987654321",
+      "email": "italiana@pizzeria.com",
+      "website": "http://pizzeriaitaliana.com",
+      "description": "Auténticas pizzas italianas con ingredientes frescos.",
+      "comuna": 2,
+      "categorias": [3]
+    }
+  },
+  {
+    "model": "todoapp.restaurant",
+    "pk": 3,
+    "fields": {
+      "name": "Sushi del Mar",
+      "address": "Calle del Sushi 789",
+      "phone": "2345678901",
+      "email": "sushi@restaurant.com",
+      "website": "http://sushidelmar.com",
+      "description": "Deliciosos sushi rolls y sashimi con ingredientes frescos.",
+      "comuna": 3,
+      "categorias": [2]
+    }
+  },
+  {
+    "model": "todoapp.restaurant",
+    "pk": 4,
+    "fields": {
+      "name": "Tacos Mexicanos",
+      "address": "Calle de los Tacos 321",
+      "phone": "3456789012",
+      "email": "tacos@restaurant.com",
+      "website": "http://tacosmexicanos.com",
+      "description": "Los mejores tacos mexicanos preparados al momento.",
+      "comuna": 1,
+      "categorias": [1, 4]
+    }
+  },
+  {
+    "model": "todoapp.restaurant",
+    "pk": 5,
+    "fields": {
+      "name": "Barbacoa Grill",
+      "address": "Av. del Asado 654",
+      "phone": "4567890123",
+      "email": "barbacoa@restaurant.com",
+      "website": "http://barbacoa.com",
+      "description": "Carnes a la parrilla y una variedad de cervezas artesanales.",
+      "comuna": 2,
+      "categorias": [1]
+    }
+  },
+  {
+    "model": "todoapp.restaurant",
+    "pk": 6,
+    "fields": {
+      "name": "Fusion Asiática",
+      "address": "Calle Fusión 987",
+      "phone": "5678901234",
+      "email": "fusion@restaurant.com",
+      "website": "http://fusionasiatica.com",
+      "description": "Comida asiática con un toque de sabores latinoamericanos.",
+      "comuna": 3,
+      "categorias": [1, 2]
+    }
+  }
+]
+  

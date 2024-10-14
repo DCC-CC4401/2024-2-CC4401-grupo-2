@@ -75,6 +75,25 @@ def add_restaurant(request):
 
 
 def restaurant_list(request):
-    restaurantes = Restaurant.objects.all()
-    if request.method == 'GET':
-        return render(request, "todoapp/restaurantes.html", {'restaurantes': restaurantes})
+    comuna_id = request.GET.get('comuna', None)  # Obtener el ID de la comuna del query parameter
+    categoria_id = request.GET.get('categoria', None)  # Obtener el ID de la categoría del query parameter
+
+    # Filtrar restaurantes por comuna y/o categoría
+    if comuna_id:
+        restaurantes = Restaurant.objects.filter(comuna_id=comuna_id)  # Filtrar por comuna
+    else:
+        restaurantes = Restaurant.objects.all()  # Mostrar todos los restaurantes si no hay filtro
+
+    # Filtrar por categoría si se proporciona
+    if categoria_id:
+        restaurantes = restaurantes.filter(categorias__id=categoria_id)
+
+    comunas = Comuna.objects.all()  # Obtener todas las comunas para el filtro
+    categorias = Categoria.objects.all()  # Obtener todas las categorías para el filtro
+
+    # Pasar todos los datos al contexto
+    return render(request, "todoapp/restaurantes.html", {
+        'restaurantes': restaurantes,
+        'comunas': comunas,
+        'categorias': categorias,  # Incluir categorías en el contexto
+    })

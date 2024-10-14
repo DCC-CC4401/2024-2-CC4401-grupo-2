@@ -1,33 +1,70 @@
 <!DOCTYPE html>
-<html >
+<html>
     <head>
         <meta charset="UTF-8">
         <title>Mapa de Comidas</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     </head>
-    <body>
-       <div class="container" style="margin-top: 2em">
+<body>
+   <div class="container" style="margin-top: 2em">
+        <!-- Encabezado de la página-->
+        <h1>Mapa de comidas</h1>
+        <p class="tagline">Busca tu antojo</p>
+        <!-- Fin encabezado -->
 
-            <!-- Encabezado de la página-->
-            <h1>Mapa de comidas</h1>
-            <p class="tagline">Busca tu antojo</p>
-            <!-- Fin encabezado -->
-                 <!-- Lista de las tareas existentes -->
-                <ul class="taskList">
-                {% for restaurant in restaurantes %} <!-- django template lang - for loop -->
-                    <li class="unstyled">
-                        <h4 for="{{ restaurant.id }}"><span class="complete-">{{ restaurant.name }}</span></h4>
-                            {% for categoria in restaurant.categorias.all %}
-                                <span style="border:thin solid grey; background-color:lightgrey" class="categoria-{{ restaurant.categorias }}"> {{categoria}} </span>
-                            {% endfor %}
-                    </li>
+        <div class="row">
+            <div class="col-md-4"> <!-- Columna para la lista de restaurantes -->
+                <form method="GET" action="">
+                    <label for="comuna">Filtrar por comuna:</label>
+                    <select name="comuna" id="comuna" onchange="this.form.submit()">
+                        <option value="">Todas las comunas</option>
+                        {% for comuna in comunas %}
+                            <option value="{{ comuna.id }}" {% if request.GET.comuna == comuna.id|stringformat:"s" %}selected{% endif %}>
+                                {{ comuna.nombre }}
+                            </option>
+                        {% endfor %}
+                    </select>
 
-                {% endfor %}
-                </ul>
-            <!-- Fin de la lista de tareas existentes-->
-            </form>
-        </div><!-- container -->
+                    <label for="categoria">Filtrar por categoría:</label>
+                    <select name="categoria" id="categoria" onchange="this.form.submit()">
+                        <option value="">Todas las categorías</option>
+                        {% for categoria in categorias %}
+                            <option value="{{ categoria.id }}" {% if request.GET.categoria == categoria.id|stringformat:"s" %}selected{% endif %}>
+                                {{ categoria.nombre }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </form>
+
+                <div class="list-group mt-3"> <!-- Lista de restaurantes -->
+                    {% for restaurant in restaurantes %}
+                        <div class="list-group-item">
+                            <h5 class="mb-1">{{ restaurant.name }}</h5>
+                            <p class="mb-1"><strong>Dirección:</strong> {{ restaurant.address }}</p>
+                            <p class="mb-1"><strong>Teléfono:</strong> {{ restaurant.phone }}</p>
+                            <p class="mb-1"><strong>Correo:</strong> {{ restaurant.email }}</p>
+                            <p class="mb-1"><strong>Sitio web:</strong> <a href="{{ restaurant.website }}">{{ restaurant.website }}</a></p>
+                            <p class="mb-1"><strong>Descripción:</strong> {{ restaurant.description }}</p>
+                            <p class="mb-1"><strong>Categorías:</strong>
+                                {% for categoria in restaurant.categorias.all %}
+                                    <span class="badge badge-secondary">{{ categoria.nombre }}</span>
+                                {% endfor %}
+                            </p>
+                        </div>
+                    {% endfor %}
+                </div> <!-- Fin de la lista -->
+            </div>
+
+            <div class="col-md-8"> <!-- Columna para el mapa -->
+                <div class="text-center" style="margin-top: 2em;">
+                    <img src="https://oyster.ignimgs.com/mediawiki/apis.ign.com/fortnite/f/f0/Risky_Reels_POI.png?width=1280" alt="Mapa placeholder" style="width: 100%; max-width: 700px;">
+                </div>
+            </div> <!-- Fin de la columna -->
+        </div> <!-- Fin de la fila -->
+    </div><!-- container -->
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </body>
 </html>
+
+

@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from categorias.models import Categoria
+from comunas.models import Comuna
 from django.contrib.auth.models import AbstractUser
 
 
@@ -25,6 +26,7 @@ class Restaurant(models.Model):
     website = models.URLField()
     description = models.TextField()
     categorias = models.ManyToManyField(Categoria) # Relación muchos a muchos con la tabla categorias
+    comuna = models.ForeignKey(Comuna, on_delete=models.CASCADE)
     
 class Tarea(models.Model):  # Todolist able name that inherits models.Model
     titulo = models.CharField(max_length=250)  # un varchar
