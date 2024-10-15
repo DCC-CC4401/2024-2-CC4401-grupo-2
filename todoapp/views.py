@@ -30,7 +30,7 @@ def register_user(request):
         mail = request.POST['mail']
 
         user = User.objects.create_user(username=nombre, password= contraseña, email=mail, pronombre=pronombre)
-        return HttpResponseRedirect('/restaurant_list')
+        return HttpResponseRedirect('/login')
     
         
 """

@@ -69,13 +69,21 @@ sprint1/Scripts/activate
 python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
 ```
-4. Agregar datos para visualización
+4. Entrar a la carpeta donde está el proyecto
+```
+cd 2024-2-CC4401-grupo-2
+```
+5. Actualizar las tablas
+```
+python manage.py migrate
+```
+6. Agregar datos para visualización
 ```
 python manage.py loaddata categorias/categorias.json
 python manage.py loaddata comunas/comunas.json
 python manage.py loaddata restaurant.json
 ```
-5. Iniciar el servidor de Django
+7. Iniciar el servidor de Django
 ```
 python manage.py runserver
 ```
