@@ -1,39 +1,122 @@
+{% load static %}
 <!DOCTYPE html>
-     <html lang="en">
-     <head>
-        <meta charset="UTF-8">
-        <title>Registro</title>
-     </head>
-     <body>
-        <h1> Registro </h1>
-        <form method="post">
-            {% csrf_token %}
-            <div class="form-group">
-                <label for="nombre_usuario">Nombre</label>
-                <input type="text" class="form-control" id=nombre_usuario name="nombre" required>
-            </div>
+<html lang="es">
 
-            <div class="form-group">
-                <label for="contraseña">Contraseña</label>
-                <input type="password" class="form-control" id="contraseña" name="contraseña" required>
-            </div>
+<head>
+  <meta charset="utf-8">
+  <title>Registro - Mapa de Comida</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-            <div>
-                <label for="pronombre">Pronombre</label>
-                <select id="pronombre" class="form-control" name="pronombre" required>
-                    <option class="disabled" value="">Elige un pronombre</option>
-                    <option value="El">El</option>
-                    <option value="La">La</option>
-                    <option value="Le">Le</option>
-                    <option value="Otro">Otro</option>
-                </select>
-            </div>
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="{% static 'img/icons/favicon.png' %}">
 
-             <div class="form-group">
-                 <label for="mail">Mail</label>
-                 <input type="email" class="form-control" id="mail" name="mail" required>
-             </div>
-             <button type="submit">Crear usuario</button>
-        </form>
-     </body>
-     </html>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700" rel="stylesheet">
+
+  <!-- Bootstrap CSS -->
+  <link href="{% static 'lib/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link href="{% static 'lib/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
+
+  <!-- Main Stylesheet File -->
+  <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+</head>
+
+<body class="fullscreen-centered page-register">
+  <!-- Background Wrapper -->
+  <div id="background-wrapper" class="benches">
+
+    <!-- Contenido Principal -->
+    <div id="content">
+      <div class="header">
+        <div class="header-inner text-center">
+          <!-- Logo -->
+          <a class="navbar-brand center-block" href="{% url 'restaurant_list' %}" title="Home">
+            <img src="{% static 'img/logomapa.png' %}" alt="Mapa de Comida">
+          </a>
+        </div>
+      </div>
+
+      <!-- Formulario de Registro -->
+      <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title text-center">Registrarse</h3>
+            </div>
+            <div class="panel-body">
+              <form method="post" action="{% url 'register_user' %}">
+                {% csrf_token %}
+                <fieldset>
+                  <!-- Campo de Nombre de Usuario -->
+                  <div class="form-group">
+                    <div class="input-group input-group-lg">
+                      <span class="input-group-addon"><i class="fa fa-fw fa-user"></i></span>
+                      <input type="text" class="form-control" placeholder="Nombre de Usuario" id=nombre_usuario name="nombre" required>
+                    </div>
+                  </div>
+
+                  <!-- Campo de Correo Electrónico -->
+                  <div class="form-group">
+                    <div class="input-group input-group-lg">
+                      <span class="input-group-addon"><i class="fa fa-fw fa-envelope"></i></span>
+                      <input type="email" class="form-control" placeholder="Correo Electrónico" name="mail" id="mail" required>
+                    </div>
+                  </div>
+
+                  <!-- Campo de Contraseña -->
+                  <div class="form-group">
+                    <div class="input-group input-group-lg">
+                      <span class="input-group-addon"><i class="fa fa-fw fa-lock"></i></span>
+                      <input type="password" class="form-control" placeholder="Contraseña" name="contraseña" id="contraseña" required>
+                    </div>
+                  </div>
+
+                  <!-- Campo de Pronombre -->
+                  <div class="form-group">
+                    <label for="pronombre">Pronombre</label>
+                    <select id="pronombre" class="form-control" name="pronombre" required>
+                      <option class="disabled" value="">Elige un pronombre</option>
+                      <option value="El">El</option>
+                      <option value="La">La</option>
+                      <option value="Le">Le</option>
+                      <option value="Otro">Otro</option>
+                    </select>
+                  </div>
+
+                  <!-- Botón de Envío -->
+                  <button type="submit" class="btn btn-primary btn-block">Confirmar</button>
+                </fieldset>
+              </form>
+              <!-- Enlace de Login -->
+              <p class="m-b-0 m-t-20 text-center">¿Ya tienes una cuenta? <a href="{% url 'login' %}">Iniciar sesión</a>.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /row -->
+    </div>
+    <!-- /#content -->
+
+  </div>
+  <!-- /#background-wrapper -->
+
+  <!-- JavaScript Libraries -->
+  <script src="{% static 'lib/jquery/jquery.min.js' %}"></script>
+  <script src="{% static 'lib/bootstrap/js/bootstrap.min.js' %}"></script>
+  <script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
+  <script src="{% static 'lib/stellar/stellar.min.js' %}"></script>
+  <script src="{% static 'lib/waypoints/waypoints.min.js' %}"></script>
+  <script src="{% static 'lib/counterup/counterup.min.js' %}"></script>
+
+  <!-- Template Specific Custom Javascript File -->
+  <script src="{% static 'js/custom.js' %}"></script>
+
+  <!-- Custom scripts demo background & colour switcher - OPTIONAL -->
+  <script src="{% static 'js/color-switcher.js' %}"></script>
+
+</body>
+
+</html>
