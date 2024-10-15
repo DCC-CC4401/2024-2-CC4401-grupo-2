@@ -11,12 +11,12 @@ La aplicación web consta de múltiples interfaces. A continuación se muestra l
 ### Interfaz de Login
 En esta interfaz lo que hacemos es permitir que un usuario ingrese a la aplicación web con su cuenta, usando su nombre y su contraseña.
 
-![Interfaz de Login](images/login.jpg)
+![Interfaz de Login](images/login2.jpg)
 
 ### Interfaz de Registro de Usuario/Restaurante
 En esta interfaz de registro de usuario se registran los datos de nuevos usuarios de la aplicación web que deseen crear su cuenta para obtener acceso a funcionalidades extra.
 
-![Interfaz de Registro de Usuario](images/user_register.jpg)
+![Interfaz de Registro de Usuario](images/user_register2.jpg)
 
 En la interfaz de registro de restaurantes se registran los datos de un nuevo restaurante que posteriormente se encontrará en la lista de nuestra aplicación.
 
@@ -50,41 +50,50 @@ Por último, se tiene la interfaz de restaurantes en particular. Para llegar a e
 ## Herramientas utilizadas
 - **Django**: Un framework de desarrollo web escrito en Python
 - **Python**: Lenguaje de programación usado para la lógica del Back End
-- **HTML, CSS, Javascript** :  Herramientas de Front End que permiten que el usuario pueda visualizar las distintas interfaces.
+- **HTML, CSS** : Herramientas de Front End que permiten que el usuario pueda visualizar las distintas interfaces.
+- **Archivos JSON**: Utilizados para cargar datos predefinidos en el sistema, como las categorías de comida, las comunas y los restaurantes.
 
 ## Instalación
 Para poder interactuar con la aplicación web, se deben seguir los siguientes pasos:
 
-1. Clonar el repositorio en la máquina local
+1. Crear un nuevo directorio
 ```
-git clone https://github.com/DCC-CC4401/2024-2-CC4401-grupo-2.git
+mkdir grupo2-2024
+cd grupo2-2024
 ```
 2. Crear e inicializar un nuevo ambiente virtual
 ```
 python -m venv sprint1
 sprint1/Scripts/activate
 ```
-3. Instalar lo necesario para el proyecto
+3. Clonar el repositorio en el directorio
 ```
-python -m pip install --upgrade pip
-python -m pip install -r requirements.txt
+git clone https://github.com/DCC-CC4401/2024-2-CC4401-grupo-2.git
 ```
-4. Entrar a la carpeta donde está el proyecto
+4. Asegurar que tengamos la ultima versión de pip instalada en el ambiente virtual (sprint1)
 ```
-cd 2024-2-CC4401-grupo-2
+(sprint1) python -m pip install --upgrade pip
 ```
-5. Actualizar las tablas
+5. Entrar a la carpeta donde está el proyecto
 ```
-python manage.py migrate
+(sprint1) cd 2024-2-CC4401-grupo-2
 ```
-6. Agregar datos para visualización
+6. Instalar los paquetes que el proyecto requiere
 ```
-python manage.py loaddata categorias/categorias.json
-python manage.py loaddata comunas/comunas.json
-python manage.py loaddata restaurant.json
+(sprint1) python -m pip install -r requirements.txt
 ```
-7. Iniciar el servidor de Django
+7. Actualizar las tablas
 ```
-python manage.py runserver
+(sprint1) python manage.py migrate
+```
+8. Agregar datos para visualización
+```
+(sprint1) python manage.py loaddata categorias/categorias.json
+(sprint1) python manage.py loaddata comunas/comunas.json
+(sprint1) python manage.py loaddata restaurant.json
+```
+9. Iniciar el servidor de Django
+```
+(sprint1) python manage.py runserver
 ```
 Habiendo completado estos pasos, debería ser posible acceder a la aplicación web y navegar las distintas interfaces dentro de esta, pudiendo llevar a cabo las funcionalidades descritas en las secciones anteriores.
