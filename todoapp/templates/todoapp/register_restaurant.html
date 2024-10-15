@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Restaurante</title>
+</head>
+<body>
+    <h1>Registrar un Restaurante</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}  <!-- Renderiza automáticamente todos los campos del formulario -->
+        <button type="submit">Registrar Restaurante</button>
+    </form>
+</body>
+</html>
