@@ -69,6 +69,12 @@ sprint1/Scripts/activate
 python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
 ```
+4. Agregar datos para visualización
+```
+python manage.py loaddata categorias/categorias.json
+python manage.py loaddata comunas/comunas.json
+python manage.py loaddata restaurant.json
+```
 5. Iniciar el servidor de Django
 ```
 python manage.py runserver
