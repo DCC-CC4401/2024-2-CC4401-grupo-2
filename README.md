@@ -35,9 +35,9 @@ En el caso de que el usuario no haya iniciado sesión, en la esquina superior de
 ### Interfaz de Restaurante en particular
 Por último, se tiene la interfaz de restaurantes en particular. Para llegar a este tipo de interfaz, el usuario debe apretar sobre el restaurante que le interese en la interfaz en donde se aprecia la lista de restaurantes(mencionada anteriormente). Aquí, si el usuario ha inciado sesión, podrá dejar reviews (texto y una puntuación de 1 a 5), como se ve en la primera imagen. De estar navegando la aplicación web de manera anónima, en lugar de observar el formulario para poder dejar reviews, se mostrará una línea de texto en donde se le pide al usuario que haga log in para acceder a aquella funcionalidad.  De esta interfaz se puede volver a la lista de restaurantes al presionar el link que se encuentra al pie de la página.
 
-![Interfaz de Restaurante en Particular con usuario registrado](images/sushi_reg.jpg)
+![Interfaz de Restaurante en Particular con usuario registrado](images/veg_reg.jpg)
 
-![Interfaz de Restaurante en Particular con usuario no registrado](images/sushi_noreg.jpg)
+![Interfaz de Restaurante en Particular con usuario no registrado](images/veg_noreg.jpg)
 
 
 ## Características
