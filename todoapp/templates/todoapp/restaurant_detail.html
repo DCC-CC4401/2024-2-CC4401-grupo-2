@@ -8,7 +8,7 @@
 <body>
     <h1>{{ restaurant.name }}</h1>
     {% if average_rating %}
-        <p><strong>Puntuación promedio:</strong> {{ average_rating }}</p>
+        <p><strong>Puntuación promedio:</strong> {{average_rating|floatformat:2}}</p>
     {% else %}
         <p><strong>Puntuación promedio:</strong> Este restaurante no cuenta con reseñas</p>    
     {% endif %}
