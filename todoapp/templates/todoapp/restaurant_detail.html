@@ -27,7 +27,7 @@
         <p>No hay reseñas todavía.</p>
     {% endif %}
 
-    <h3>Deja tu comentario</h3>
+    <h3>Deja tu reseña</h3>
     {% if user.is_authenticated %}
         <form method="post">
             {% csrf_token %}
@@ -35,7 +35,7 @@
             <button type="submit">Enviar</button>
         </form>
     {% else %}
-        <p>Por favor <a href="{% url 'login' %}">inicia sesión</a> para poder dejar un comentario.</p>
+        <p>Por favor <a href="{% url 'login' %}">inicia sesión</a> para poder dejar una reseña.</p>
     {% endif %}
     <div class="mt-4">
         <a href="{% url 'restaurant_list' %}" class="btn">Volver a la lista de restaurantes</a>
