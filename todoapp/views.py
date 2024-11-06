@@ -8,6 +8,7 @@ from todoapp.models import User
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login,logout
 from django.contrib.auth.decorators import login_required
+from django.db.models import Avg
 
 
 """
@@ -104,6 +105,7 @@ def logout_user(request):
 def restaurant_detail(request, restaurant_id):
     restaurant = get_object_or_404(Restaurant, id=restaurant_id)
     reviews = restaurant.reviews.all()
+    average_rating = reviews.aggregate(Avg('rating'))['rating__avg'] or 0
 
     if request.method == 'POST' and request.user.is_authenticated:
         form = ReviewForm(request.POST)
@@ -119,5 +121,6 @@ def restaurant_detail(request, restaurant_id):
     return render(request, 'todoapp/restaurant_detail.html', {
         'restaurant': restaurant,
         'reviews': reviews,
-        'form': form
+        'form': form,
+        'average_rating':average_rating
     })
