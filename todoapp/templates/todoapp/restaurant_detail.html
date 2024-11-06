@@ -7,6 +7,11 @@
 </head>
 <body>
     <h1>{{ restaurant.name }}</h1>
+    {% if average_rating %}
+        <p><strong>Puntuación promedio:</strong> {{ average_rating }}</p>
+    {% else %}
+        <p><strong>Puntuación promedio:</strong> Este restaurante no cuenta con reseñas</p>    
+    {% endif %}
     <p><strong>Dirección:</strong> {{ restaurant.address }}</p>
     <p><strong>Teléfono:</strong> {{ restaurant.phone }}</p>
     <p><strong>Correo:</strong> {{ restaurant.email }}</p>
