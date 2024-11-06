@@ -50,6 +50,14 @@
                             </option>
                         {% endfor %}
                     </select>
+                    <label for="rating">Filtrar por puntuación:</label>
+                    <select name="rating" id="rating" onchange="this.form.submit()" class="form-control">
+                        <option value="">Todas las puntuaciones</option>
+                        <option value="1-2">[1, 2[ estrellas</option>
+                        <option value="2-3">[2, 3[ estrellas</option>
+                        <option value="3-4">[3, 4[ estrellas</option>
+                        <option value="4-5">[4, 5[ estrellas</option>
+                    </select>
                 </form>
 
                 <div class="list-group mt-3"> <!-- Lista de restaurantes -->
