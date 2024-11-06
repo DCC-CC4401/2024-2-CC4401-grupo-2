@@ -61,6 +61,7 @@ def add_restaurant(request):
 def restaurant_list(request):
     comuna_id = request.GET.get('comuna', None)  # Obtener el ID de la comuna del query parameter
     categoria_id = request.GET.get('categoria', None)  # Obtener el ID de la categoría del query parameter
+    rating_filter = request.GET.get('rating', None)  # TOmamos el valor de nuestro filtro
 
     # Filtrar restaurantes por comuna y/o categoría
     if comuna_id:
@@ -71,6 +72,16 @@ def restaurant_list(request):
     # Filtrar por categoría si se proporciona
     if categoria_id:
         restaurantes = restaurantes.filter(categorias__id=categoria_id)
+
+    if rating_filter:
+        if rating_filter == '1-2':
+            restaurantes = restaurantes.annotate(avg_rating=Avg('reviews__rating')).filter(avg_rating__gte=1, avg_rating__lt=2)
+        elif rating_filter == '2-3':
+            restaurantes = restaurantes.annotate(avg_rating=Avg('reviews__rating')).filter(avg_rating__gte=2, avg_rating__lt=3)
+        elif rating_filter == '3-4':
+            restaurantes = restaurantes.annotate(avg_rating=Avg('reviews__rating')).filter(avg_rating__gte=3, avg_rating__lt=4)
+        elif rating_filter == '4-5':
+            restaurantes = restaurantes.annotate(avg_rating=Avg('reviews__rating')).filter(avg_rating__gte=4, avg_rating__lte=5)    
 
     comunas = Comuna.objects.all()  # Obtener todas las comunas para el filtro
     categorias = Categoria.objects.all()  # Obtener todas las categorías para el filtro
