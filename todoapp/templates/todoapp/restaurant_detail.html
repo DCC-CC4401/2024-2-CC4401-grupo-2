@@ -25,6 +25,9 @@
                 <li>
                     <strong>{{ review.user.username }}:</strong>
                     {{ review.comment }} - {{ review.rating }} estrellas
+                    {% if user == review.user %}
+                        <a href="{% url 'edit_review' review.id %}" class="btn btn-primary btn-sm">Editar</a>
+                    {% endif%}
                 </li>
             {% endfor %}
         </ul>
