@@ -27,15 +27,6 @@ class Restaurant(models.Model):
     description = models.TextField()
     categorias = models.ManyToManyField(Categoria) # Relación muchos a muchos con la tabla categorias
     comuna = models.ForeignKey(Comuna, on_delete=models.CASCADE)
-    
-class Tarea(models.Model):  # Todolist able name that inherits models.Model
-    titulo = models.CharField(max_length=250)  # un varchar
-    contenido = models.TextField(blank=True)  # un text
-    fecha_creación = models.DateField(default=timezone.now().strftime("%Y-%m-%d"))  # un date
-    categoria = models.ForeignKey(Categoria, default="general", on_delete=models.CASCADE)  # la llave foránea
-
-    def __str__(self):
-        return self.titulo  # name to be shown when called
 
 """
 Modelo para representar a un usuario de nuestra aplicación web,
