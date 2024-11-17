@@ -135,3 +135,28 @@ def restaurant_detail(request, restaurant_id):
         'form': form,
         'average_rating':average_rating
     })
+
+@login_required
+def edit_review(request, review_id):
+    review = get_object_or_404(Review, id=review_id, user=request.user)
+
+    if request.method == "POST":
+        if 'save_changes' in request.POST:  # Guardar cambios
+            review.comment = request.POST['comment']
+            review.rating = request.POST['rating']
+            review.save()
+            # Actualizar el promedio del restaurante
+            review.restaurant.reviews.aggregate_avg = review.restaurant.reviews.aggregate(Avg('rating'))['rating__avg'] or 0
+            review.restaurant.save()
+        elif 'delete_review' in request.POST:  # Borrar reseña
+            review.delete()
+            # Actualizar el promedio del restaurante
+            review.restaurant.reviews.aggregate_avg = review.restaurant.reviews.aggregate(Avg('rating'))['rating__avg'] or 0
+            review.restaurant.save()
+        return redirect('restaurant_detail', restaurant_id=review.restaurant.id)
+
+    form = ReviewForm(instance=review)
+    return render(request, 'todoapp/edit_review.html', {
+        'review': review,
+        'form': form
+    })
