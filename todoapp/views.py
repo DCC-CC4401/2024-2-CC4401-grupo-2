@@ -27,10 +27,10 @@ def register_user(request):
     elif request.method == 'POST':
         nombre = request.POST['nombre']
         contraseña = request.POST['contraseña']
-        pronombre = request.POST['pronombre']
+        tipo = request.POST['tipo']
         mail = request.POST['mail']
 
-        user = User.objects.create_user(username=nombre, password= contraseña, email=mail, pronombre=pronombre)
+        user = User.objects.create_user(username=nombre, password= contraseña, email=mail, tipo=tipo)
         return HttpResponseRedirect('/login')
     
         

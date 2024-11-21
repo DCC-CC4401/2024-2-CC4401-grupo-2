@@ -38,7 +38,7 @@ Características añadidas:
 """
 
 class User(AbstractUser):
-    tipo = [('Cliente','Cliente'),('Propietario','Propietario')]
+    tipo = [('Cliente','Cliente'),('Propietario','Propietario'),]
     tipo = models.CharField(max_length=12,choices=tipo)
 
 
