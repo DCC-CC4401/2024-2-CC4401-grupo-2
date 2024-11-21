@@ -33,8 +33,8 @@ Modelo para representar a un usuario de nuestra aplicación web,
 creado en base al modelo `AbstractUser` de Django.
 
 Características añadidas:
-- pronombre: Pronombre elegido por el usuario.
-    Se elige entre las siguientes opciones: 'La', 'El', 'Le', 'Otro'.
+- Tipo: Tipo de usuario
+    Se elige entre las opciones Cliente y Propietario.
 """
 
 class User(AbstractUser):
