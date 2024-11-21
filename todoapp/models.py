@@ -38,8 +38,8 @@ Características añadidas:
 """
 
 class User(AbstractUser):
-    pronombres = [('La','La'),('El','El'),('Le','Le'),('Otro','Otro')]
-    pronombre = models.CharField(max_length=5,choices=pronombres)
+    tipo = [('Cliente','Cliente'),('Propietario','Propietario')]
+    tipo = models.CharField(max_length=12,choices=tipo)
 
 
 """
