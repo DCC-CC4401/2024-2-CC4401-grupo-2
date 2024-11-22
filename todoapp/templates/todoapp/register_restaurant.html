@@ -12,5 +12,8 @@
         {{ form.as_p }}  <!-- Renderiza automáticamente todos los campos del formulario -->
         <button type="submit">Registrar Restaurante</button>
     </form>
+    <div class="mt-4">
+        <a href="{% url 'restaurant_list' %}" class="btn">Volver a la lista de restaurantes</a>
+    </div>
 </body>
 </html>
