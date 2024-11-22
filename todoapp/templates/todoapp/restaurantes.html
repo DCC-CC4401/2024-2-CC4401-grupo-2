@@ -17,6 +17,7 @@
             <div class="col-xs-1">
                 {% if user.is_authenticated %}
                     {% if user.tipo == "Propietario" %}
+                        <!-- aquí añadir la nueva ruta que muestre opción para redirigirse a mis restaurantes -->
                         <a class="badge badge-primary" href="{% url 'register_restaurant' %}">Añadir un restaurante</a>
                         <a class="badge badge-secondary" href="{% url 'logout' %}">Cerrar Sesión</a>
 
