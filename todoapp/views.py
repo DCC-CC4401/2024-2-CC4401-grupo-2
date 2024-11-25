@@ -44,6 +44,7 @@ Vista para agregar un nuevo restaurante al sistema.
 Argumento:
 - request: La solicitud HTTP recibida por el servidor.
 """
+@login_required
 def add_restaurant(request):
     if request.method == 'GET':
         form = RestaurantForm()  # Cargar el formulario vacío
@@ -51,7 +52,9 @@ def add_restaurant(request):
     elif request.method == 'POST':
         form = RestaurantForm(request.POST)
         if form.is_valid():
-            form.save()  # Guardar el restaurante si los datos son válidos
+            restaurant = form.save(commit=False)
+            restaurant.owner = request.user
+            restaurant.save()
             return HttpResponseRedirect('/restaurant_list')  # Redirigir a la página de lista de restaurante
         else:
             return render(request, 'todoapp/register_restaurant.html', {'form': form})
@@ -160,3 +163,12 @@ def edit_review(request, review_id):
         'review': review,
         'form': form
     })
+
+
+@login_required
+def my_restaurants(request):
+    if request.user.tipo == 'Propietario':
+        restaurants = Restaurant.objects.filter(owner=request.user)
+        return render(request, 'todoapp/my_restaurants.html', {'restaurants': restaurants})
+    else:
+        return render(request, 'todoapp/error.html', {'message': 'No tienes acceso a esta página.'})
