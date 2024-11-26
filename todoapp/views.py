@@ -10,9 +10,9 @@ from django.contrib.auth import authenticate, login,logout
 from django.contrib.auth.decorators import login_required
 from django.db.models import Avg
 from geopy.geocoders import Nominatim
-from geojson import Point,Feature, GeometryCollection, FeatureCollection, GeoJSON
+from geojson import Point,Feature, FeatureCollection
 
-import json
+
 
 """
 Vista para registrar un nuevo usuario en el sistema.
@@ -32,8 +32,7 @@ def register_user(request):
         contraseña = request.POST['contraseña']
         tipo = request.POST['tipo']
         mail = request.POST['mail']
-
-        user = User.objects.create_user(username=nombre, password= contraseña, email=mail, tipo=tipo)
+        User.objects.create_user(username=nombre, password= contraseña, email=mail, tipo=tipo)
         return HttpResponseRedirect('/login')
     
         
@@ -41,8 +40,8 @@ def register_user(request):
 Vista para agregar un nuevo restaurante al sistema.
 
 - Si el método es 'GET', se muestra un formulario vacío para registrar un restaurante.
-- Si el método es 'POST', se procesa el formulario y se guarda la información del restaurante 
-  si los datos son válidos. Si no lo son, se vuelve a mostrar el formulario.
+- Si el método es 'POST', se procesa el formulario, procesando para añadir geolocalización y un dueño. 
+  Si los datos son válidos, se guarda en la db. Si no lo son, se vuelve a mostrar el formulario.
 
 Argumento:
 - request: La solicitud HTTP recibida por el servidor.
@@ -62,7 +61,7 @@ def add_restaurant(request):
         form = RestaurantForm(request.POST)
         if form.is_valid():
             obj=form.save(commit=False)  # Guardar el restaurante si los datos son válidos
-            [lon, lat]=getGeoLoc(obj.address)
+            [lon, lat]=getGeoLoc(obj.address + ", " + obj.comuna + ", Chile")
             obj.lon=lon  # Asignar longitud y latitud
             obj.lat=lat
             obj.owner = request.user  # Asignar al propietario logeado
@@ -106,7 +105,13 @@ def restaurant_list(request):
     mapbox_access_token = 'pk.eyJ1Ijoia2xlaW5rZXRhbGxpY2lzIiwiYSI6ImNtM3htOXkxejFmbGsydm85c2RvOWhmMDkifQ.C0w_HJftDbkzi119R-_AvA'
     geolocs=[]
     for rest in restaurantes:
-        geolocs.append(Feature(geometry=Point((float(rest.lon), float(rest.lat))), properties={"title": rest.name, "description": rest.address}))
+        geolocs.append(Feature(
+            geometry=Point((float(rest.lon), float(rest.lat))), 
+            properties={
+                "title": rest.name, 
+                "description": rest.address
+            }
+        ))
     
     gl = FeatureCollection(geolocs)
     

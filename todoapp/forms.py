@@ -1,7 +1,8 @@
 from django import forms
-from .models import Restaurant, Review
+from .models import Restaurant, Review, Categoria
 
 class RestaurantForm(forms.ModelForm):
+    
     class Meta:
         model = Restaurant
         fields = ['name', 'address', 'phone', 'email', 'website', 'description', 'categorias', 'comuna']
@@ -15,6 +16,7 @@ class RestaurantForm(forms.ModelForm):
             'description': 'Descripción',
             'categorias': 'Categorías',
         }
+        widgets={'categorias':forms.CheckboxSelectMultiple}
 
 class ReviewForm(forms.ModelForm):
     class Meta:

@@ -3,17 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" 
+              integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" 
+              crossorigin="anonymous">
     <title>Registrar Restaurante</title>
 </head>
 <body>
-    <h1>Registrar un Restaurante</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}  <!-- Renderiza automáticamente todos los campos del formulario -->
-        <button type="submit">Registrar Restaurante</button>
-    </form>
-    <div class="mt-4">
-        <a href="{% url 'restaurant_list' %}" class="btn">Volver a la lista de restaurantes</a>
+    <div class="container">
+        <h1>Registrar un Restaurante</h1>
+        <div class="form-group">
+            {% load crispy_forms_tags %}
+            <form method="post">
+                {% csrf_token %}
+                {{ form | crispy }}  <!-- Renderiza automáticamente todos los campos del formulario -->
+                <button type="submit" class="btn btn-success">Registrar Restaurante</button>
+            </form>
+        </div>
+        <div class="mt-4">
+            <a href="{% url 'restaurant_list' %}" class="badge badge-primary">Volver a la lista de restaurantes</a>
+        </div>
     </div>
 </body>
 </html>

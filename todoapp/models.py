@@ -3,7 +3,6 @@ from django.utils import timezone
 from categorias.models import Categoria
 from comunas.models import Comuna
 from django.contrib.auth.models import AbstractUser
-from django.contrib.auth import get_user_model
 
 
 
