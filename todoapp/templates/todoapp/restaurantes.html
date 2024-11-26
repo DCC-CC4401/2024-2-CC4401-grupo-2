@@ -93,7 +93,7 @@
 
             <div class="col-md-8"> <!-- Columna para el mapa -->
                 <div class="text-center" style="margin-top: 2em;">
-                    <div id='map' style='width: 400px; height: 300px;'></div>
+                    <div id='map' style='width: 100%; height: 600px;'></div>
                         {{ geojson|json_script:'geojson' }}
                         <script defer>
                             const geojson = JSON.parse(document.getElementById('geojson').textContent);
@@ -103,7 +103,7 @@
                                 container: 'map',
                                 style: 'mapbox://styles/mapbox/streets-v11',
                                 center: [ -70.64827, -33.45694],
-                                zoom: 10,
+                                zoom: 11,
                             });
                             map.on('load', () => {
                                 map.addSource('points', {
@@ -116,13 +116,13 @@
                                     type: 'circle',
                                     source: 'points',
                                     paint: {
-                                    'circle-radius': 10,
-                                    'circle-color': '#007cbf',
+                                    'circle-radius': 8,
+                                    'circle-color': '#ff0000',
                                     }
                                 })
                             });
                             
-                            console.log(geojson);
+                        
                         </script>
                         
                         

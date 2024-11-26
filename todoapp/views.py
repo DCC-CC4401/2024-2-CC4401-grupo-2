@@ -100,7 +100,6 @@ def restaurant_list(request):
         geolocs.append(Feature(geometry=Point((float(rest.lon), float(rest.lat)))))
     
     gl = FeatureCollection(geolocs)
-    print( gl)
     
 
     # Pasar todos los datos al contexto
