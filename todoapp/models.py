@@ -3,6 +3,8 @@ from django.utils import timezone
 from categorias.models import Categoria
 from comunas.models import Comuna
 from django.contrib.auth.models import AbstractUser
+from django.contrib.auth import get_user_model
+
 
 
 
@@ -27,8 +29,12 @@ class Restaurant(models.Model):
     description = models.TextField()
     categorias = models.ManyToManyField(Categoria) # Relación muchos a muchos con la tabla categorias
     comuna = models.ForeignKey(Comuna, on_delete=models.CASCADE)
+
     lon = models.CharField(max_length=12)
     lat = models.CharField(max_length=12)
+    owner = models.ForeignKey("todoapp.User", on_delete=models.SET_NULL, related_name='restaurants', null=True, blank=True)
+
+
 
 """
 Modelo para representar a un usuario de nuestra aplicación web,

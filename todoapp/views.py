@@ -47,7 +47,14 @@ Vista para agregar un nuevo restaurante al sistema.
 Argumento:
 - request: La solicitud HTTP recibida por el servidor.
 """
+from django.http import HttpResponseForbidden
+
+@login_required
 def add_restaurant(request):
+    # Verificar si el usuario es un propietario
+    if request.user.tipo != 'Propietario':
+        return HttpResponseForbidden("Solo los propietarios pueden añadir restaurantes.")
+    
     if request.method == 'GET':
         form = RestaurantForm()  # Cargar el formulario vacío
         return render(request, 'todoapp/register_restaurant.html', {'form': form})
@@ -56,13 +63,14 @@ def add_restaurant(request):
         if form.is_valid():
             obj=form.save(commit=False)  # Guardar el restaurante si los datos son válidos
             [lon, lat]=getGeoLoc(obj.address)
-            obj.lon=lon
+            obj.lon=lon  # Asignar longitud y latitud
             obj.lat=lat
+            obj.owner = request.user  # Asignar al propietario logeado
             obj.save()
-            return HttpResponseRedirect('/restaurant_list')  # Redirigir a la página de lista de restaurante
+            return HttpResponseRedirect('/my_restaurants')  # Redirigir a "Mis Restaurantes"
+
         else:
             return render(request, 'todoapp/register_restaurant.html', {'form': form})
-
 
 
 def restaurant_list(request):
@@ -180,10 +188,19 @@ def edit_review(request, review_id):
         'form': form
     })
 
+
 def getGeoLoc(address):
     app = Nominatim(user_agent="tutorial")
     try:
         return [app.geocode(address).raw["lon"], app.geocode(address).raw["lat"]]
     except:
         return [0, 0]
-    
+
+@login_required
+def my_restaurants(request):
+    if request.user.tipo == 'Propietario':
+        restaurants = Restaurant.objects.filter(owner=request.user)
+        return render(request, 'todoapp/my_restaurants.html', {'restaurants': restaurants})
+    else:
+        return render(request, 'todoapp/error.html', {'message': 'No tienes acceso a esta página.'})
+
