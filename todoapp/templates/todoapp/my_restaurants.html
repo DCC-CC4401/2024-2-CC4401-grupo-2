@@ -19,6 +19,7 @@
                     {% if user.tipo == "Propietario" %}
                         <!-- Botones para acciones del propietario -->
                         <a class="badge badge-primary" href="{% url 'register_restaurant' %}">Añadir un restaurante</a>
+                        <a class="badge badge-primary" href="{% url 'restaurant_list' %}">Volver a la lista de restaurantes</a>
                         <a class="badge badge-secondary" href="{% url 'logout' %}">Cerrar Sesión</a>
                     {% endif %}
                 {% endif %}
@@ -53,6 +54,7 @@
         </div> <!-- Fin de la lista -->
 
     </div><!-- container -->
+
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </body>
