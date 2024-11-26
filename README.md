@@ -64,7 +64,8 @@ cd grupo2-2024
 2. Crear e inicializar un nuevo ambiente virtual
 ```
 python -m venv sprint1
-sprint1/Scripts/activate
+sprint1/Scripts/activate (windows)
+$source sprint1/bin/activate (Linux)
 ```
 3. Clonar el repositorio en el directorio
 ```

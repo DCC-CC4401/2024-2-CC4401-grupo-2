@@ -29,7 +29,11 @@ class Restaurant(models.Model):
     description = models.TextField()
     categorias = models.ManyToManyField(Categoria) # Relación muchos a muchos con la tabla categorias
     comuna = models.ForeignKey(Comuna, on_delete=models.CASCADE)
+
+    lon = models.CharField(max_length=12)
+    lat = models.CharField(max_length=12)
     owner = models.ForeignKey("todoapp.User", on_delete=models.SET_NULL, related_name='restaurants', null=True, blank=True)
+
 
 
 """
