@@ -91,7 +91,6 @@ git clone https://github.com/DCC-CC4401/2024-2-CC4401-grupo-2.git
 ```
 (sprint1) python manage.py loaddata categorias/categorias.json
 (sprint1) python manage.py loaddata comunas/comunas.json
-(sprint1) python manage.py loaddata restaurant.json
 ```
 9. Iniciar el servidor de Django
 ```
