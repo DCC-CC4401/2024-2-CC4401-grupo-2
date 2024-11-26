@@ -7,6 +7,11 @@
 </head>
 <body>
     <h1>{{ restaurant.name }}</h1>
+    {% if average_rating %}
+        <p><strong>Puntuación promedio:</strong> {{average_rating|floatformat:2}}</p>
+    {% else %}
+        <p><strong>Puntuación promedio:</strong> Este restaurante no cuenta con reseñas</p>    
+    {% endif %}
     <p><strong>Dirección:</strong> {{ restaurant.address }}</p>
     <p><strong>Teléfono:</strong> {{ restaurant.phone }}</p>
     <p><strong>Correo:</strong> {{ restaurant.email }}</p>
@@ -20,6 +25,9 @@
                 <li>
                     <strong>{{ review.user.username }}:</strong>
                     {{ review.comment }} - {{ review.rating }} estrellas
+                    {% if user == review.user %}
+                        <a href="{% url 'edit_review' review.id %}" class="btn btn-primary btn-sm">Editar</a>
+                    {% endif%}
                 </li>
             {% endfor %}
         </ul>
@@ -27,7 +35,7 @@
         <p>No hay reseñas todavía.</p>
     {% endif %}
 
-    <h3>Deja tu comentario</h3>
+    <h3>Deja tu reseña</h3>
     {% if user.is_authenticated %}
         <form method="post">
             {% csrf_token %}
@@ -35,7 +43,7 @@
             <button type="submit">Enviar</button>
         </form>
     {% else %}
-        <p>Por favor <a href="{% url 'login' %}">inicia sesión</a> para poder dejar un comentario.</p>
+        <p>Por favor <a href="{% url 'login' %}">inicia sesión</a> para poder dejar una reseña.</p>
     {% endif %}
     <div class="mt-4">
         <a href="{% url 'restaurant_list' %}" class="btn">Volver a la lista de restaurantes</a>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Reseña</title>
+</head>
+<body>
+    <h1>Editar Reseña</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" name="save_changes" class="btn btn-success">Guardar Cambios</button>
+        <button type="button" onclick="window.history.back()" class="btn btn-secondary">Descartar Cambios</button>
+        <button type="submit" name="delete_review" class="btn btn-danger">Borrar Reseña</button>
+    </form>
+</body>
+</html>

@@ -8,6 +8,7 @@ from todoapp.models import User
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login,logout
 from django.contrib.auth.decorators import login_required
+from django.db.models import Avg
 
 
 """
@@ -26,10 +27,10 @@ def register_user(request):
     elif request.method == 'POST':
         nombre = request.POST['nombre']
         contraseña = request.POST['contraseña']
-        pronombre = request.POST['pronombre']
+        tipo = request.POST['tipo']
         mail = request.POST['mail']
 
-        user = User.objects.create_user(username=nombre, password= contraseña, email=mail, pronombre=pronombre)
+        user = User.objects.create_user(username=nombre, password= contraseña, email=mail, tipo=tipo)
         return HttpResponseRedirect('/login')
     
         
@@ -43,23 +44,32 @@ Vista para agregar un nuevo restaurante al sistema.
 Argumento:
 - request: La solicitud HTTP recibida por el servidor.
 """
+from django.http import HttpResponseForbidden
+
+@login_required
 def add_restaurant(request):
+    # Verificar si el usuario es un propietario
+    if request.user.tipo != 'Propietario':
+        return HttpResponseForbidden("Solo los propietarios pueden añadir restaurantes.")
+    
     if request.method == 'GET':
         form = RestaurantForm()  # Cargar el formulario vacío
         return render(request, 'todoapp/register_restaurant.html', {'form': form})
     elif request.method == 'POST':
         form = RestaurantForm(request.POST)
         if form.is_valid():
-            form.save()  # Guardar el restaurante si los datos son válidos
-            return HttpResponseRedirect('/restaurant_list')  # Redirigir a la página de lista de restaurante
+            restaurant = form.save(commit=False)
+            restaurant.owner = request.user  # Asignar al propietario logeado
+            restaurant.save()
+            return HttpResponseRedirect('/my_restaurants')  # Redirigir a "Mis Restaurantes"
         else:
             return render(request, 'todoapp/register_restaurant.html', {'form': form})
-
 
 
 def restaurant_list(request):
     comuna_id = request.GET.get('comuna', None)  # Obtener el ID de la comuna del query parameter
     categoria_id = request.GET.get('categoria', None)  # Obtener el ID de la categoría del query parameter
+    rating_filter = request.GET.get('rating', None)  # TOmamos el valor de nuestro filtro
 
     # Filtrar restaurantes por comuna y/o categoría
     if comuna_id:
@@ -70,6 +80,16 @@ def restaurant_list(request):
     # Filtrar por categoría si se proporciona
     if categoria_id:
         restaurantes = restaurantes.filter(categorias__id=categoria_id)
+
+    if rating_filter:
+        if rating_filter == '1-2':
+            restaurantes = restaurantes.annotate(avg_rating=Avg('reviews__rating')).filter(avg_rating__gte=1, avg_rating__lt=2)
+        elif rating_filter == '2-3':
+            restaurantes = restaurantes.annotate(avg_rating=Avg('reviews__rating')).filter(avg_rating__gte=2, avg_rating__lt=3)
+        elif rating_filter == '3-4':
+            restaurantes = restaurantes.annotate(avg_rating=Avg('reviews__rating')).filter(avg_rating__gte=3, avg_rating__lt=4)
+        elif rating_filter == '4-5':
+            restaurantes = restaurantes.annotate(avg_rating=Avg('reviews__rating')).filter(avg_rating__gte=4, avg_rating__lte=5)    
 
     comunas = Comuna.objects.all()  # Obtener todas las comunas para el filtro
     categorias = Categoria.objects.all()  # Obtener todas las categorías para el filtro
@@ -104,6 +124,7 @@ def logout_user(request):
 def restaurant_detail(request, restaurant_id):
     restaurant = get_object_or_404(Restaurant, id=restaurant_id)
     reviews = restaurant.reviews.all()
+    average_rating = reviews.aggregate(Avg('rating'))['rating__avg'] or 0
 
     if request.method == 'POST' and request.user.is_authenticated:
         form = ReviewForm(request.POST)
@@ -119,5 +140,40 @@ def restaurant_detail(request, restaurant_id):
     return render(request, 'todoapp/restaurant_detail.html', {
         'restaurant': restaurant,
         'reviews': reviews,
+        'form': form,
+        'average_rating':average_rating
+    })
+
+@login_required
+def edit_review(request, review_id):
+    review = get_object_or_404(Review, id=review_id, user=request.user)
+
+    if request.method == "POST":
+        if 'save_changes' in request.POST:  # Guardar cambios
+            review.comment = request.POST['comment']
+            review.rating = request.POST['rating']
+            review.save()
+            # Actualizar el promedio del restaurante
+            review.restaurant.reviews.aggregate_avg = review.restaurant.reviews.aggregate(Avg('rating'))['rating__avg'] or 0
+            review.restaurant.save()
+        elif 'delete_review' in request.POST:  # Borrar reseña
+            review.delete()
+            # Actualizar el promedio del restaurante
+            review.restaurant.reviews.aggregate_avg = review.restaurant.reviews.aggregate(Avg('rating'))['rating__avg'] or 0
+            review.restaurant.save()
+        return redirect('restaurant_detail', restaurant_id=review.restaurant.id)
+
+    form = ReviewForm(instance=review)
+    return render(request, 'todoapp/edit_review.html', {
+        'review': review,
         'form': form
     })
+
+
+@login_required
+def my_restaurants(request):
+    if request.user.tipo == 'Propietario':
+        restaurants = Restaurant.objects.filter(owner=request.user)
+        return render(request, 'todoapp/my_restaurants.html', {'restaurants': restaurants})
+    else:
+        return render(request, 'todoapp/error.html', {'message': 'No tienes acceso a esta página.'})
