@@ -67,6 +67,7 @@ def add_restaurant(request):
             obj.lat=lat
             obj.owner = request.user  # Asignar al propietario logeado
             obj.save()
+            form.save_m2m()
             return HttpResponseRedirect('/my_restaurants')  # Redirigir a "Mis Restaurantes"
 
         else:
