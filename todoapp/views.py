@@ -9,7 +9,10 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login,logout
 from django.contrib.auth.decorators import login_required
 from django.db.models import Avg
+from geopy.geocoders import Nominatim
+from geojson import Point,Feature, GeometryCollection, FeatureCollection, GeoJSON
 
+import json
 
 """
 Vista para registrar un nuevo usuario en el sistema.
@@ -51,7 +54,11 @@ def add_restaurant(request):
     elif request.method == 'POST':
         form = RestaurantForm(request.POST)
         if form.is_valid():
-            form.save()  # Guardar el restaurante si los datos son válidos
+            obj=form.save(commit=False)  # Guardar el restaurante si los datos son válidos
+            [lon, lat]=getGeoLoc(obj.address)
+            obj.lon=lon
+            obj.lat=lat
+            obj.save()
             return HttpResponseRedirect('/restaurant_list')  # Redirigir a la página de lista de restaurante
         else:
             return render(request, 'todoapp/register_restaurant.html', {'form': form})
@@ -62,6 +69,8 @@ def restaurant_list(request):
     comuna_id = request.GET.get('comuna', None)  # Obtener el ID de la comuna del query parameter
     categoria_id = request.GET.get('categoria', None)  # Obtener el ID de la categoría del query parameter
     rating_filter = request.GET.get('rating', None)  # TOmamos el valor de nuestro filtro
+
+
 
     # Filtrar restaurantes por comuna y/o categoría
     if comuna_id:
@@ -85,12 +94,23 @@ def restaurant_list(request):
 
     comunas = Comuna.objects.all()  # Obtener todas las comunas para el filtro
     categorias = Categoria.objects.all()  # Obtener todas las categorías para el filtro
+    mapbox_access_token = 'pk.eyJ1Ijoia2xlaW5rZXRhbGxpY2lzIiwiYSI6ImNtM3htOXkxejFmbGsydm85c2RvOWhmMDkifQ.C0w_HJftDbkzi119R-_AvA'
+    geolocs=[]
+    for rest in restaurantes:
+        geolocs.append(Feature(geometry=Point((float(rest.lon), float(rest.lat)))))
+    
+    gl = FeatureCollection(geolocs).to_instance()
+    print( gl)
+    
 
     # Pasar todos los datos al contexto
     return render(request, "todoapp/restaurantes.html", {
         'restaurantes': restaurantes,
         'comunas': comunas,
         'categorias': categorias,  # Incluir categorías en el contexto
+        'mapbox_access_token': mapbox_access_token,
+        'geojson': gl,
+        
     })
 
 
@@ -160,3 +180,11 @@ def edit_review(request, review_id):
         'review': review,
         'form': form
     })
+
+def getGeoLoc(address):
+    app = Nominatim(user_agent="tutorial")
+    try:
+        return [app.geocode(address).raw["lon"], app.geocode(address).raw["lat"]]
+    except:
+        return [0, 0]
+    

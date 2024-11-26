@@ -27,6 +27,8 @@ class Restaurant(models.Model):
     description = models.TextField()
     categorias = models.ManyToManyField(Categoria) # Relación muchos a muchos con la tabla categorias
     comuna = models.ForeignKey(Comuna, on_delete=models.CASCADE)
+    lon = models.CharField(max_length=12)
+    lat = models.CharField(max_length=12)
 
 """
 Modelo para representar a un usuario de nuestra aplicación web,
