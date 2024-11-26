@@ -106,7 +106,7 @@ def restaurant_list(request):
     mapbox_access_token = 'pk.eyJ1Ijoia2xlaW5rZXRhbGxpY2lzIiwiYSI6ImNtM3htOXkxejFmbGsydm85c2RvOWhmMDkifQ.C0w_HJftDbkzi119R-_AvA'
     geolocs=[]
     for rest in restaurantes:
-        geolocs.append(Feature(geometry=Point((float(rest.lon), float(rest.lat)))))
+        geolocs.append(Feature(geometry=Point((float(rest.lon), float(rest.lat))), properties={"title": rest.name, "description": rest.address}))
     
     gl = FeatureCollection(geolocs)
     

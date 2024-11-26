@@ -121,7 +121,31 @@
                                     }
                                 })
                             });
+                            const popup = new mapboxgl.Popup({
+                                    closeButton: false,
+                                    closeOnClick: false
+                            })
+
+                            map.on('mouseenter', 'points', (event) => {
+                                const coordinates = event.features[0].geometry.coordinates.slice();
+                                const description = event.features[0].properties.description;
+                                const title = event.features[0].properties.title;
+
+                                popup
+                                .setLngLat(coordinates)
+                                .setHTML(`<h4>${title}</h4><p>${description}</p>`)
+                                .addTo(map);
+
+                                map.getCanvas().style.cursor = 'pointer';
+                            });
                             
+
+                            
+
+                            map.on('mouseleave', 'points', () => {
+                                map.getCanvas().style.cursor = '';
+                                popup.remove();
+                            });
                         
                         </script>
                         
