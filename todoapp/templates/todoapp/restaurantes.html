@@ -61,10 +61,10 @@
                     <label for="rating">Filtrar por puntuación:</label>
                     <select name="rating" id="rating" onchange="this.form.submit()" class="form-control">
                         <option value="">Todas las puntuaciones</option>
-                        <option value="1-2"{% if request.GET.rating == '1-2' %}selected{% endif %}> [1, 2[ estrellas</option>
-                        <option value="2-3"{% if request.GET.rating == '2-3' %}selected{% endif %}> [2, 3[ estrellas</option>
-                        <option value="3-4"{% if request.GET.rating == '3-4' %}selected{% endif %}> [3, 4[ estrellas</option>
-                        <option value="4-5"{% if request.GET.rating == '4-5' %}selected{% endif %}> [4, 5[ estrellas</option>
+                        <option value="1-2"{% if request.GET.rating == '1-2' %}selected{% endif %}> &#11088;</option>
+                        <option value="2-3"{% if request.GET.rating == '2-3' %}selected{% endif %}> &#11088;&#11088; </option>
+                        <option value="3-4"{% if request.GET.rating == '3-4' %}selected{% endif %}> &#11088;&#11088;&#11088; </option>
+                        <option value="4-5"{% if request.GET.rating == '4-5' %}selected{% endif %}>&#11088;&#11088;&#11088;&#11088; o más</option>
                     </select>
                 </form>
 
