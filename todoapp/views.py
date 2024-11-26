@@ -99,7 +99,7 @@ def restaurant_list(request):
     for rest in restaurantes:
         geolocs.append(Feature(geometry=Point((float(rest.lon), float(rest.lat)))))
     
-    gl = FeatureCollection(geolocs).to_instance()
+    gl = FeatureCollection(geolocs)
     print( gl)
     
 

@@ -94,20 +94,22 @@
             <div class="col-md-8"> <!-- Columna para el mapa -->
                 <div class="text-center" style="margin-top: 2em;">
                     <div id='map' style='width: 400px; height: 300px;'></div>
-                        <script>
+                        {{ geojson|json_script:'geojson' }}
+                        <script defer>
+                            const geojson = JSON.parse(document.getElementById('geojson').textContent);
                             mapboxgl.accessToken = "{{ mapbox_access_token }}";
-                            geojson="{{ geojson }}"
+                            
                             var map = new mapboxgl.Map({
                                 container: 'map',
                                 style: 'mapbox://styles/mapbox/streets-v11',
                                 center: [ -70.64827, -33.45694],
-                                zoom: 10
+                                zoom: 10,
                             });
                             map.on('load', () => {
                                 map.addSource('points', {
                                     type: 'geojson',
-                                    data: JSON.parse(geojson) ,
-                                });
+                                    data: geojson ,
+                                }),
 
                                 map.addLayer({
                                     id: 'points',
@@ -115,12 +117,16 @@
                                     source: 'points',
                                     paint: {
                                     'circle-radius': 10,
-                                    'circle-color': '#007cbf'
+                                    'circle-color': '#007cbf',
                                     }
-                                });
+                                })
                             });
+                            
                             console.log(geojson);
                         </script>
+                        
+                        
+
                 </div>
             </div> <!-- Fin de la columna -->
         </div> <!-- Fin de la fila -->
