@@ -105,6 +105,7 @@
                                 center: [ -70.64827, -33.45694],
                                 zoom: 11,
                             });
+
                             map.on('load', () => {
                                 map.addSource('points', {
                                     type: 'geojson',
@@ -121,6 +122,7 @@
                                     }
                                 })
                             });
+                            
                             const popup = new mapboxgl.Popup({
                                     closeButton: false,
                                     closeOnClick: false
@@ -139,18 +141,13 @@
                                 map.getCanvas().style.cursor = 'pointer';
                             });
                             
-
-                            
-
                             map.on('mouseleave', 'points', () => {
                                 map.getCanvas().style.cursor = '';
                                 popup.remove();
                             });
                         
                         </script>
-                        
-                        
-
+                    </div>
                 </div>
             </div> <!-- Fin de la columna -->
         </div> <!-- Fin de la fila -->

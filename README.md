@@ -8,50 +8,69 @@ Estos usuarios pueden visitar la aplicación web de manera anónima, o bien pued
 
 La aplicación web consta de múltiples interfaces. A continuación se muestra la visualización de de estas, junto a una breve descripción de cada una, así como lo que el usuario puede hacer en cada una de ellas.
 
+### Interfaz Principal/Listado de restaurantes
+Esta es la primera interfaz que se ve al iniciar la aplicación web. En este apartado uno puede Registrarse o Iniciar Sesión. En el lado izquierdo es donde se colocarán los restaurantes al momento de registrarlos y se mostrarán en el mapa interactivo del lado derecho.
+
+![Menu Principal](images/inicio.png)
+
+### Interfaz de Registro de Cliente/Propietario
+Esta es la interfaz a la hora de dar de alta tanto Clientes como Propietarios de Restaurantes, que dependiendo del tipo de usuario, son las funcionalidades que tendrán en el resto de interfaces.
+
+![Registro](images/registro.png)
+
 ### Interfaz de Login
-En esta interfaz lo que hacemos es permitir que un usuario ingrese a la aplicación web con su cuenta, usando su nombre y su contraseña.
+En esta interfaz lo que hacemos es permitir que un Usuario/Propietario ingrese a la aplicación web con su cuenta, usando su nombre y su contraseña.
 
-![Interfaz de Login](images/login2.jpg)
+![Login](images/login.png)
 
-### Interfaz de Registro de Usuario/Restaurante
-En esta interfaz de registro de usuario se registran los datos de nuevos usuarios de la aplicación web que deseen crear su cuenta para obtener acceso a funcionalidades extra.
+### Interfaz Principal para un Propietario
+Esta interfaz es el Menú Principal, pero con las funcionalidades extras que tiene un Propietario, es decir que puede agregar y visualizar sus restaurantes agregados.
 
-![Interfaz de Registro de Usuario](images/user_register2.jpg)
+![Inicio Propietario](images/inicio_propietario.png)
 
-En la interfaz de registro de restaurantes se registran los datos de un nuevo restaurante que posteriormente se encontrará en la lista de nuestra aplicación.
+### Interfaz para Añadir Restaurantes
+Al hacer clic en la sección Añadir un Restaurante, serás redirigido a la pestaña para dar de alta dicho restaurante con su información correspondiente.
 
-![Interfaz de Registro de Restaurante](images/rest_reg.jpg)
+![Registro Restaurante](images/registro_restaurante.png)
 
-### Interfaz de Lista de Restaurantes
-Notemos que la vista de esta interfaz depende de si el usuario ha hecho log in o no. En caso de haber iniciado sesión, el usuario verá un cuadro en la esquina superior derecha desde el cual podrá cerrarla, como se ve en la primera imagen.
+### Interfaz para ver "mis restaurantes"
+Al finalizar el registro del restaurante, el Propietario es enviado a la Interfaz “Mis Restaurantes”, donde se muestran los restaurantes agregados por dicho Propietario.
 
-![Interfaz de Lista de Restaurantes](images/rlist_reg.jpg)
+![Mis Restaurantes](images/mis_restaurantes.png)
 
-En el caso de que el usuario no haya iniciado sesión, en la esquina superior derecha aparecerán dos cuadros, en los cuales el usuario puede optar por registrarse, si es que no tiene una cuenta ya creada, o bien iniciar su sesión, si es que sí la tiene, como se ve en la imagen a continuación.
+### Interfaz Principal para un Propietario despues de agregar un restaurante
+Esta interfaz es el mismo Menú Principal, pero ahora con el restaurante agregado y visible en el mapa interactivo.
 
-![Interfaz de Lista de Restaurantes](images/rlist_noreg.jpg)
+![Inicio Con Restaurante](images/inicio_propietario_restaurante.png)
 
+### Interfaz datos de un Restaurante
+Al hacer clic en el nombre del restaurante desde el menú principal, se le mostrará la interfaz de datos del restaurante, que muestra la información del restaurante, junto a las reseñas de los clientes y propietarios. Si el usuario está logueado podrá realizar reseñas, con una puntuación de 1 a 5.
 
-### Interfaz de Restaurante en particular
-Por último, se tiene la interfaz de restaurantes en particular. Para llegar a este tipo de interfaz, el usuario debe apretar sobre el restaurante que le interese en la interfaz en donde se aprecia la lista de restaurantes(mencionada anteriormente). Aquí, si el usuario ha inciado sesión, podrá dejar reviews (texto y una puntuación de 1 a 5), como se ve en la primera imagen. De estar navegando la aplicación web de manera anónima, en lugar de observar el formulario para poder dejar reviews, se mostrará una línea de texto en donde se le pide al usuario que haga log in para acceder a aquella funcionalidad.  De esta interfaz se puede volver a la lista de restaurantes al presionar el link que se encuentra al pie de la página.
+![Info Restaurantes](images/info_restaurante.png)
 
-![Interfaz de Restaurante en Particular con usuario registrado](images/veg_reg.jpg)
+### Interfaz para editar una review
+Esta es la interfaz para editar tu propia reseña, no es posible editar las reseñas de otros usuarios, pero aquí puedes cambiar el contenido, eliminar la reseña o volver a la interfaz de datos del restaurante anterior sin realizar ningún cambio.
 
-![Interfaz de Restaurante en Particular con usuario no registrado](images/veg_noreg.jpg)
+![Editar Review](images/editar_review.png)
 
+### Interfaz Principal para un Cliente
+Esta interfaz es el Menú Principal, pero desde el punto de vista del Cliente, donde no hay funcionalidades extras para agregar y ver restaurantes.
+
+![Inicio Cliente](images/inicio_cliente.png)
 
 ## Características
-- Sistema de registro e inicio de sesión para los usuarios
-- Sistema de registro de restaurantes.
+- Sistema de registro e inicio de sesión para los usuarios y propietarios.
+- Sistema de registro de restaurantes para propietarios.
+- Varios filtros para mostrar diferentes restaurantes según la preferencia del usuario.
 - Opción de evaluación de restaurantes en cuanto a calidad (de 1 a 5).
-- Opción para registrar comentarios sobre un restaurante particular.
+- Opción para registrar y editar sus comentarios comentarios sobre un restaurante particular.
 
 
 ## Herramientas utilizadas
 - **Django**: Un framework de desarrollo web escrito en Python
 - **Python**: Lenguaje de programación usado para la lógica del Back End
 - **HTML, CSS** : Herramientas de Front End que permiten que el usuario pueda visualizar las distintas interfaces.
-- **Archivos JSON**: Utilizados para cargar datos predefinidos en el sistema, como las categorías de comida, las comunas y los restaurantes.
+- **Archivos JSON**: Utilizados para cargar datos predefinidos en el sistema, como las categorías de comida y las comunas.
 
 ## Instalación
 Para poder interactuar con la aplicación web, se deben seguir los siguientes pasos:
