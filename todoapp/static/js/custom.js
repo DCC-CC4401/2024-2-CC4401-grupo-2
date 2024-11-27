@@ -58,13 +58,13 @@ $(document).ready(function() {
   //Scroll Top link
   $(window).scroll(function(){
     if ($(this).scrollTop() > 100) {
-      $('.scrolltop').fadeIn();
+      $('.scroll_top').fadeIn();
     } else {
-      $('.scrolltop').fadeOut();
+      $('.scroll_top').fadeOut();
     }
   });
 
-  $('.scrolltop').click(function(){
+  $('.scroll_top').click(function(){
     $("html, body").animate({
       scrollTop: 0
     }, 600);
