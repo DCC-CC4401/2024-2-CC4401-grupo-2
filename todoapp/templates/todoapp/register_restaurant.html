@@ -23,7 +23,7 @@
                     <div class="row align-items-center">
                         <div class="col-md-8">
                             <a class="navbar-brand" href="{% url 'restaurant_list' %}" title="Home">
-                                <img src="{% static 'img/logo.png' %}" alt="FoodMap Logo" class="logo-img" style="height: 50px;">
+                                <img src="{% static 'img/logo.png' %}" alt="FoodMap Logo" style="transform: scale(2); transform-origin: center;">
                             </a>
                         </div>
                         <div class="col-md-4 text-right">
@@ -33,10 +33,10 @@
                                         <li><a class="btn btn-primary" href="{% url 'my_restaurants' %}">Mis restaurantes</a></li>
                                         <li><a class="btn btn-primary" href="{% url 'register_restaurant' %}">Añadir un restaurante</a></li>
                                     {% endif %}
-                                    <li><a class="btn btn-secondary" href="{% url 'logout' %}">Cerrar Sesión</a></li>
+                                    <li><a class="btn btn-warning" href="{% url 'logout' %}">Cerrar Sesión</a></li>
                                 {% else %}
                                     <li><a class="btn btn-primary" href="{% url 'register_user' %}">Registrarse</a></li>
-                                    <li><a class="btn btn-secondary" href="{% url 'login' %}">Iniciar Sesión</a></li>
+                                    <li><a class="btn btn-warning" href="{% url 'login' %}">Iniciar Sesión</a></li>
                                 {% endif %}
                             </ul>
                         </div>
@@ -57,7 +57,7 @@
                 </form>
             </div>
             <div class="mt-4">
-                <a href="{% url 'restaurant_list' %}" class="btn btn-secondary">Volver a la lista de restaurantes</a>
+                <a href="{% url 'restaurant_list' %}" class="btn btn-warning">Volver a la lista de restaurantes</a>
             </div>
         </div>
     </div>

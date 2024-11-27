@@ -1,92 +1,114 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>FoodMap - Lista de Restaurantes</title>
-        <!-- CSS de Flexor -->
-        <link rel="stylesheet" href="{% static 'lib/bootstrap/css/bootstrap.min.css' %}">
-        <link rel="stylesheet" href="{% static 'lib/font-awesome/css/font-awesome.min.css' %}">
-        <link rel="stylesheet" href="{% static 'css/style.css' %}">
-        <script src='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.js'></script>
-        <link href='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.css' rel='stylesheet' />
-    </head>
-<body class="page-index has-hero">
-    <div id="background-wrapper" class="buildings">
-        <!-- ======== Navegación ======== -->
-        <div id="navigation" class="wrapper">
-            <!-- Bloque de navegación del template -->
-            <div class="header">
-                <div class="header-inner container">
-                    <div class="row align-items-center">
-                        <div class="col-md-8">
-                            <a class="navbar-brand" href="{% url 'restaurant_list' %}" title="Home">
-                                <img src="{% static 'img/logo.png' %}" alt="FoodMap Logo" class="logo-img" style="height: 50px;">
-                            </a>
-                        </div>
-                        <div class="col-md-4 text-right">
-                            <ul class="list-inline user-menu">
-                                {% if user.is_authenticated %}
-                                    {% if user.tipo == "Propietario" %}
-                                        <li><a class="btn btn-primary" href="{% url 'my_restaurants' %}">Mis restaurantes</a></li>
-                                        <li><a class="btn btn-primary" href="{% url 'register_restaurant' %}">Añadir un restaurante</a></li>
-                                    {% endif %}
-                                    <li><a class="btn btn-secondary" href="{% url 'logout' %}">Cerrar Sesión</a></li>
-                                {% else %}
-                                    <li><a class="btn btn-primary" href="{% url 'register_user' %}">Registrarse</a></li>
-                                    <li><a class="btn btn-secondary" href="{% url 'login' %}">Iniciar Sesión</a></li>
+<head>
+    <meta charset="UTF-8">
+    <title>FoodMap - Lista de Restaurantes</title>
+    <!-- CSS de Flexor y Bootstrap -->
+    <link rel="stylesheet" href="{% static 'lib/bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'lib/font-awesome/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.css' rel='stylesheet' />
+</head>
+<body class="page-index has-hero" style="background: url('{% static "img/bg_footer-map.png" %}') no-repeat center center; background-size: cover; min-height: 100vh;">
+
+    <!-- Navegación -->
+    <div id="navigation" class="wrapper">
+        <div class="header">
+            <div class="header-inner container">
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <a class="navbar-brand" href="{% url 'restaurant_list' %}" title="Home">
+                            <img src="{% static 'img/logo.png' %}" alt="FoodMap Logo" style="transform: scale(2); transform-origin: center;">
+                        </a>
+                    </div>
+                    <div class="col-md-4 text-right">
+                        <ul class="list-inline user-menu">
+                            {% if user.is_authenticated %}
+                                {% if user.tipo == "Propietario" %}
+                                    <li><a class="btn btn-primary" href="{% url 'my_restaurants' %}">Mis restaurantes</a></li>
+                                    <li><a class="btn btn-primary" href="{% url 'register_restaurant' %}">Añadir un restaurante</a></li>
                                 {% endif %}
-                            </ul>
-                        </div>
+                                <li><a class="btn btn-warning" href="{% url 'logout' %}">Cerrar Sesión</a></li>
+                            {% else %}
+                                <li><a class="btn btn-primary" href="{% url 'register_user' %}">Registrarse</a></li>
+                                <li><a class="btn btn-warning" href="{% url 'login' %}">Iniciar Sesión</a></li>
+                            {% endif %}
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
-        
-        <!-- Contenido principal -->
-        <div class="container mt-5 flex-grow-1">
-            <div class="row">
-                <!-- Filtros de Restaurantes -->
-                <div class="col-md-4">
-                    <h3 style="color: #ffc107;">Filtrar Restaurantes</h3>
-                    <form method="GET" action="">
-                        <div class="form-group" style="background-color: #ff8c00; padding: 10px; border-radius: 5px; color: white;">
-                            <label for="comuna">Comuna:</label>
-                            <select name="comuna" id="comuna" class="form-control" style="background-color: white; color: black;">
-                                <option value="">Todas las comunas</option>
-                                {% for comuna in comunas %}
-                                    <option value="{{ comuna.id }}" {% if request.GET.comuna == comuna.id|stringformat:"s" %}selected{% endif %}>
-                                        {{ comuna.nombre }}
-                                    </option>
+    </div>
+    
+    <!-- Contenido principal -->
+    <div class="container mt-5 flex-grow-1">
+        <div class="row">
+            <!-- Filtros de Restaurantes: Columna Izquierda -->
+            <div class="col-md-4 order-md-1 d-flex flex-column align-items-center justify-content-center">
+                <h3 style="color: #ffc107;">Filtrar Restaurantes</h3>
+                <form method="GET" action="" style="width: 100%;">
+                    <div class="form-group" style="background-color: #ff8c00; padding: 10px; border-radius: 5px; color: white;">
+                        <label for="comuna">Comuna:</label>
+                        <select name="comuna" id="comuna" onchange="this.form.submit()" class="form-control" style="background-color: white; color: black;">
+                            <option value="">Todas las comunas</option>
+                            {% for comuna in comunas %}
+                                <option value="{{ comuna.id }}" {% if request.GET.comuna == comuna.id|stringformat:"s" %}selected{% endif %}>
+                                    {{ comuna.nombre }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group" style="background-color: #ff8c00; padding: 10px; border-radius: 5px; color: white;">
+                        <label for="categoria">Categoría:</label>
+                        <select name="categoria" id="categoria" onchange="this.form.submit()" class="form-control" style="background-color: white; color: black;">
+                            <option value="">Todas las categorías</option>
+                            {% for categoria in categorias %}
+                                <option value="{{ categoria.id }}" {% if request.GET.categoria == categoria.id|stringformat:"s" %}selected{% endif %}>
+                                    {{ categoria.nombre }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group" style="background-color: #ff8c00; padding: 10px; border-radius: 5px; color: white;">
+                        <label for="rating">Puntuación:</label>
+                        <select name="rating" id="rating" onchange="this.form.submit()" class="form-control" style="background-color: white; color: black;">
+                            <option value="">Todas las puntuaciones</option>
+                            <option value="1-2"{% if request.GET.rating == '1-2' %}selected{% endif %}>&#11088;</option>
+                            <option value="2-3"{% if request.GET.rating == '2-3' %}selected{% endif %}>&#11088;&#11088;</option>
+                            <option value="3-4"{% if request.GET.rating == '3-4' %}selected{% endif %}>&#11088;&#11088;&#11088;</option>
+                            <option value="4-5"{% if request.GET.rating == '4-5' %}selected{% endif %}>&#11088;&#11088;&#11088;&#11088; o más</option>
+                        </select>
+                    </div>
+                </form>
+                 <!-- Lista de restaurantes en un deslizador -->
+                <div class="list-group mt-3" style="height: 400px; overflow-y: auto; width: 100%;"> 
+                    {% for restaurant in restaurantes %}
+                        <div class="list-group-item" style="background-color: white; color: black; margin-bottom: 10px; border-radius: 5px;">
+                            <h5 class="mb-1" style="font-weight: bold;">
+                                <a href="{% url 'restaurant_detail' restaurant.id %}" style="color: #ff8c00;">
+                                    {{ restaurant.name }}
+                                </a>
+                            </h5>
+                            <p class="mb-1"><strong>Dirección:</strong> {{ restaurant.address }}</p>
+                            <p class="mb-1"><strong>Teléfono:</strong> {{ restaurant.phone }}</p>
+                            <p class="mb-1"><strong>Correo:</strong> {{ restaurant.email }}</p>
+                            <p class="mb-1"><strong>Sitio Web:</strong> <a href="{{ restaurant.website }}" style="color: white;">{{ restaurant.website }}</a></p>
+                            <p class="mb-1"><strong>Descripción:</strong> {{ restaurant.description }}</p>
+                            <p class="mb-1"><strong>Categorías:</strong>
+                                {% for categoria in restaurant.categorias.all %}
+                                    <span class="badge badge-secondary">{{ categoria.nombre }}</span>
                                 {% endfor %}
-                            </select>
+                            </p>
                         </div>
-                        <div class="form-group" style="background-color: #ff8c00; padding: 10px; border-radius: 5px; color: white;">
-                            <label for="categoria">Categoría:</label>
-                             <select name="categoria" id="categoria" class="form-control" style="background-color: white; color: black;">
-                                <option value="">Todas las categorías</option>
-                                {% for categoria in categorias %}
-                                    <option value="{{ categoria.id }}" {% if request.GET.categoria == categoria.id|stringformat:"s" %}selected{% endif %}>
-                                        {{ categoria.nombre }}
-                                    </option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                        <div class="form-group" style="background-color: #ff8c00; padding: 10px; border-radius: 5px; color: white;">
-                            <label for="rating">Puntuación:</label>
-                            <select name="rating" id="rating" class="form-control" style="background-color: white; color: black;">
-                                <option value="">Todas las puntuaciones</option>
-                                <option value="1-2"{% if request.GET.rating == '1-2' %}selected{% endif %}>&#11088;</option>
-                                <option value="2-3"{% if request.GET.rating == '2-3' %}selected{% endif %}>&#11088;&#11088;</option>
-                                <option value="3-4"{% if request.GET.rating == '3-4' %}selected{% endif %}>&#11088;&#11088;&#11088;</option>
-                                <option value="4-5"{% if request.GET.rating == '4-5' %}selected{% endif %}>&#11088;&#11088;&#11088;&#11088; o más</option>
-                            </select>
-                        </div>
-                    </form>
-                </div>
-                
-                <!-- Mapa -->
-                <div class="col-md-8">
+                    {% endfor %}
+                </div> <!-- Fin de la lista -->
+            </div>
+
+            <!-- Mapa: Columna Derecha -->
+            <div class="col-md-8 order-md-2">
+                <div class="text-center" style="margin-top: 2em;">
                     <div id='map' style='width: 100%; height: 600px;'></div>
                     {{ geojson|json_script:'geojson' }}
                     <script defer>
@@ -111,16 +133,16 @@
                                 type: 'circle',
                                 source: 'points',
                                 paint: {
-                                'circle-radius': 8,
-                                'circle-color': '#ff0000',
+                                    'circle-radius': 8,
+                                    'circle-color': '#ff0000',
                                 }
                             })
                         });
                         
                         const popup = new mapboxgl.Popup({
-                                closeButton: false,
-                                closeOnClick: false
-                        })
+                            closeButton: false,
+                            closeOnClick: false
+                        });
 
                         map.on('mouseenter', 'points', (event) => {
                             const coordinates = event.features[0].geometry.coordinates.slice();
@@ -148,18 +170,5 @@
     <!-- Agregar scripts -->
     <script src="{% static 'lib/jquery/jquery.min.js' %}"></script>
     <script src="{% static 'lib/bootstrap/js/bootstrap.min.js' %}"></script>
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const backgroundWrapper = document.getElementById('background-wrapper');
-        backgroundWrapper.style.minHeight = window.innerHeight + 'px';
-    });
-</script>
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const backgroundWrapper = document.getElementById('background-wrapper');
-        backgroundWrapper.style.minHeight = window.innerHeight + 'px';
-        backgroundWrapper.style.height = '100%';
-    });
-</script>
 </body>
 </html>

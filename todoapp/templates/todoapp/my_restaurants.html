@@ -13,7 +13,7 @@
         <link rel="stylesheet" href="{% static 'css/style.css' %}">
     </head>
 <body class="page-index has-hero">
-    <div id="background-wrapper" class="buildings">
+    <div id="background-wrapper" class="boots">
         <!-- ======== Navegación ======== -->
         <div id="navigation" class="wrapper">
             <!-- Bloque de navegación del template -->
@@ -22,7 +22,7 @@
                     <div class="row align-items-center">
                         <div class="col-md-8">
                             <a class="navbar-brand" href="{% url 'restaurant_list' %}" title="Home">
-                                <img src="{% static 'img/logo.png' %}" alt="FoodMap Logo" class="logo-img" style="height: 50px;">
+                                <img src="{% static 'img/logo.png' %}" alt="FoodMap Logo" style="transform: scale(2); transform-origin: center;">
                             </a>
                         </div>
                         <div class="col-md-4 text-right">
@@ -32,10 +32,10 @@
                                         <li><a class="btn btn-primary" href="{% url 'my_restaurants' %}">Mis restaurantes</a></li>
                                         <li><a class="btn btn-primary" href="{% url 'register_restaurant' %}">Añadir un restaurante</a></li>
                                     {% endif %}
-                                    <li><a class="btn btn-secondary" href="{% url 'logout' %}">Cerrar Sesión</a></li>
+                                    <li><a class="btn btn-warning" href="{% url 'logout' %}">Cerrar Sesión</a></li>
                                 {% else %}
                                     <li><a class="btn btn-primary" href="{% url 'register_user' %}">Registrarse</a></li>
-                                    <li><a class="btn btn-secondary" href="{% url 'login' %}">Iniciar Sesión</a></li>
+                                    <li><a class="btn btn-warning" href="{% url 'login' %}">Iniciar Sesión</a></li>
                                 {% endif %}
                             </ul>
                         </div>
@@ -47,25 +47,25 @@
         <!-- Contenido principal -->
         <div class="container mt-5 flex-grow-1">
             <h1 style="color: #ffc107;">Mis Restaurantes</h1>
-            <p class="tagline" style="color: #ffc107;">Administra tus restaurantes registrados</p>
+            <p class="tagline" style="color: white;">Administra tus restaurantes registrados</p>
             
             <!-- Lista de restaurantes -->
             <div class="list-group mt-3 d-flex flex-row flex-wrap justify-content-start">
                 {% for restaurant in restaurants %}
                     <div class="list-group-item" style="flex: 1 1 calc(50% - 20px); background-color: #ff8c00; padding: 25px; border-radius: 15px; color: white; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); margin: 10px;">
-                        <h5 class="mb-3" style="font-weight: bold;">
-                            <a href="{% url 'restaurant_detail' restaurant.id %}" style="color: white;">
+                        <h5 class="mb-3" style="font-weight: bold; font-size: 2em;">
+                            <a href="{% url 'restaurant_detail' restaurant.id %}" style="color: black;">
                                 {{ restaurant.name }}
                             </a>
                         </h5>
-                        <p class="mb-2"><strong>Dirección:</strong> {{ restaurant.address }}</p>
+                        <p class="mb-2":><strong>Dirección:</strong> {{ restaurant.address }}</p>
                         <p class="mb-1"><strong>Teléfono:</strong> {{ restaurant.phone }}</p>
                         <p class="mb-1"><strong>Correo:</strong> {{ restaurant.email }}</p>
                         <p class="mb-1"><strong>Sitio Web:</strong> <a href="{{ restaurant.website }}" style="color: white;">{{ restaurant.website }}</a></p>
                         <p class="mb-1"><strong>Descripción:</strong> {{ restaurant.description }}</p>
                         <p class="mb-1"><strong>Categorías:</strong>
                             {% for categoria in restaurant.categorias.all %}
-                                <span class="badge badge-secondary">{{ categoria.nombre }}</span>
+                                <span class="badge badge-warning">{{ categoria.nombre }}</span>
                             {% endfor %}
                         </p>
                     </div>
