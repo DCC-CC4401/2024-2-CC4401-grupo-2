@@ -82,9 +82,9 @@ cd grupo2-2024
 ```
 2. Crear e inicializar un nuevo ambiente virtual
 ```
-python -m venv sprint1
-sprint1/Scripts/activate (windows)
-$source sprint1/bin/activate (Linux)
+python -m venv sprint2
+sprint2/Scripts/activate (windows)
+$source sprint2/bin/activate (Linux)
 ```
 3. Clonar el repositorio en el directorio
 ```
@@ -92,27 +92,27 @@ git clone https://github.com/DCC-CC4401/2024-2-CC4401-grupo-2.git
 ```
 4. Asegurar que tengamos la ultima versión de pip instalada en el ambiente virtual (sprint1)
 ```
-(sprint1) python -m pip install --upgrade pip
+(sprint2) python -m pip install --upgrade pip
 ```
 5. Entrar a la carpeta donde está el proyecto
 ```
-(sprint1) cd 2024-2-CC4401-grupo-2
+(sprint2) cd 2024-2-CC4401-grupo-2
 ```
 6. Instalar los paquetes que el proyecto requiere
 ```
-(sprint1) python -m pip install -r requirements.txt
+(sprint2) python -m pip install -r requirements.txt
 ```
 7. Actualizar las tablas
 ```
-(sprint1) python manage.py migrate
+(sprint2) python manage.py migrate
 ```
 8. Agregar datos para visualización
 ```
-(sprint1) python manage.py loaddata categorias/categorias.json
-(sprint1) python manage.py loaddata comunas/comunas.json
+(sprint2) python manage.py loaddata categorias/categorias.json
+(sprint2) python manage.py loaddata comunas/comunas.json
 ```
 9. Iniciar el servidor de Django
 ```
-(sprint1) python manage.py runserver
+(sprint2) python manage.py runserver
 ```
 Habiendo completado estos pasos, debería ser posible acceder a la aplicación web y navegar las distintas interfaces dentro de esta, pudiendo llevar a cabo las funcionalidades descritas en las secciones anteriores.
