@@ -61,7 +61,7 @@ def add_restaurant(request):
         form = RestaurantForm(request.POST)
         if form.is_valid():
             obj=form.save(commit=False)  # Guardar el restaurante si los datos son válidos
-            [lon, lat]=getGeoLoc(obj.address + ", " + obj.comuna + ", Chile")
+            [lon, lat]=getGeoLoc(obj.address)
             obj.lon=lon  # Asignar longitud y latitud
             obj.lat=lat
             obj.owner = request.user  # Asignar al propietario logeado
