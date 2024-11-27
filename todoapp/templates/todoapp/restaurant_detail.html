@@ -3,50 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" 
+              integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" 
+              crossorigin="anonymous">
     <title>{{ restaurant.name }}</title>
 </head>
 <body>
-    <h1>{{ restaurant.name }}</h1>
-    {% if average_rating %}
-        <p><strong>Puntuación promedio:</strong> {{average_rating|floatformat:2}}</p>
-    {% else %}
-        <p><strong>Puntuación promedio:</strong> Este restaurante no cuenta con reseñas</p>    
-    {% endif %}
-    <p><strong>Dirección:</strong> {{ restaurant.address }}</p>
-    <p><strong>Teléfono:</strong> {{ restaurant.phone }}</p>
-    <p><strong>Correo:</strong> {{ restaurant.email }}</p>
-    <p><strong>Sitio Web:</strong> {{ restaurant.website }}</p>
-    <p><strong>Descripción:</strong> {{ restaurant.description }}</p>
+    <div class="container" style="margin-top: 2em;">
+        <h1>{{ restaurant.name }}</h1>
+        {% if average_rating %}
+            <p><strong>Puntuación promedio:</strong> {{average_rating|floatformat:2}}</p>
+        {% else %}
+            <p><strong>Puntuación promedio:</strong> Este restaurante no cuenta con reseñas</p>    
+        {% endif %}
+        <p><strong>Dirección:</strong> {{ restaurant.address }}</p>
+        <p><strong>Teléfono:</strong> {{ restaurant.phone }}</p>
+        <p><strong>Correo:</strong> {{ restaurant.email }}</p>
+        <p><strong>Sitio Web:</strong> {{ restaurant.website }}</p>
+        <p><strong>Descripción:</strong> {{ restaurant.description }}</p>
 
-    <h2>Reseñas</h2>
-    {% if reviews %}
-        <ul>
-            {% for review in reviews %}
-                <li>
-                    <strong>{{ review.user.username }}:</strong>
-                    {{ review.comment }} - {{ review.rating }} estrellas
-                    {% if user == review.user %}
-                        <a href="{% url 'edit_review' review.id %}" class="btn btn-primary btn-sm">Editar</a>
-                    {% endif%}
-                </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>No hay reseñas todavía.</p>
-    {% endif %}
+        <h2>Reseñas</h2>
+        {% if reviews %}
+            <ul>
+                {% for review in reviews %}
+                    <li>
+                        <strong>{{ review.user.username }}:</strong>
+                        {{ review.comment }} - {{ review.rating }} estrellas
+                        {% if user == review.user %}
+                            <a href="{% url 'edit_review' review.id %}" class="btn btn-primary btn-sm">Editar</a>
+                        {% endif%}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No hay reseñas todavía.</p>
+        {% endif %}
 
-    <h3>Deja tu reseña</h3>
-    {% if user.is_authenticated %}
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Enviar</button>
-        </form>
-    {% else %}
-        <p>Por favor <a href="{% url 'login' %}">inicia sesión</a> para poder dejar una reseña.</p>
-    {% endif %}
-    <div class="mt-4">
-        <a href="{% url 'restaurant_list' %}" class="btn">Volver a la lista de restaurantes</a>
+        <h3>Deja tu reseña</h3>
+        {% if user.is_authenticated %}
+        <div class="form-group">
+            {% load crispy_forms_tags %}
+            <form method="post">
+                {% csrf_token %}
+                {{ form | crispy }}
+                <button type="submit" class="btn btn-success">Enviar</button>
+            </form>
+        </div>
+        {% else %}
+            <p>Por favor <a href="{% url 'login' %}">inicia sesión</a> para poder dejar una reseña.</p>
+        {% endif %}
+        <div class="mt-4">
+            <a href="{% url 'restaurant_list' %}" class="badge badge-primary">Volver a la lista de restaurantes</a>
+        </div>
     </div>
 </body>
 </html>

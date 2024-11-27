@@ -3,16 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" 
+              integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" 
+              crossorigin="anonymous">
     <title>Editar Reseña</title>
 </head>
 <body>
-    <h1>Editar Reseña</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" name="save_changes" class="btn btn-success">Guardar Cambios</button>
-        <button type="button" onclick="window.history.back()" class="btn btn-secondary">Descartar Cambios</button>
-        <button type="submit" name="delete_review" class="btn btn-danger">Borrar Reseña</button>
-    </form>
+    <div class="container" style="margin-top: 2em;">
+        <h1>Editar Reseña</h1>
+        <div class="form-group">
+            {% load crispy_forms_tags %}
+            <form method="post">
+                {% csrf_token %}
+                {{ form | crispy }}
+                <button type="submit" name="save_changes" class="btn btn-success">Guardar Cambios</button>
+                <button type="button" onclick="window.history.back()" class="btn btn-secondary">Descartar Cambios</button>
+                <button type="submit" name="delete_review" class="btn btn-danger">Borrar Reseña</button>
+            </form>
+        </div>
+    </div>
 </body>
 </html>
