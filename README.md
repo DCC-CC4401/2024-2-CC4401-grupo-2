@@ -63,7 +63,7 @@ Esta interfaz es el Menú Principal, pero desde el punto de vista del Cliente, d
 - Sistema de registro de restaurantes para propietarios.
 - Varios filtros para mostrar diferentes restaurantes según la preferencia del usuario.
 - Opción de evaluación de restaurantes en cuanto a calidad (de 1 a 5).
-- Opción para registrar y editar sus comentarios comentarios sobre un restaurante particular.
+- Opción para registrar y editar sus comentarios sobre un restaurante particular.
 
 
 ## Herramientas utilizadas
