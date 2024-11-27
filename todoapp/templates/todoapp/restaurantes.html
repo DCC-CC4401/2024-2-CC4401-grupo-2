@@ -10,8 +10,15 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <script src='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.css' rel='stylesheet' />
+    <style>
+        .page-index.has-hero {
+            background: url('{% static "img/bg_footer-map.png" %}') no-repeat center center;
+            background-size: cover;
+            min-height: 100vh;
+        }
+    </style>
 </head>
-<body class="page-index has-hero" style="background: url('{% static "img/bg_footer-map.png" %}') no-repeat center center; background-size: cover; min-height: 100vh;">
+<body class="page-index has-hero">
 
     <!-- Navegación -->
     <div id="navigation" class="wrapper">
@@ -94,7 +101,7 @@
                             <p class="mb-1"><strong>Dirección:</strong> {{ restaurant.address }}</p>
                             <p class="mb-1"><strong>Teléfono:</strong> {{ restaurant.phone }}</p>
                             <p class="mb-1"><strong>Correo:</strong> {{ restaurant.email }}</p>
-                            <p class="mb-1"><strong>Sitio Web:</strong> <a href="{{ restaurant.website }}" style="color: white;">{{ restaurant.website }}</a></p>
+                            <p class="mb-1"><strong>Sitio Web:</strong> <a href="{{ restaurant.website }}" style="color: black;">{{ restaurant.website }}</a></p>
                             <p class="mb-1"><strong>Descripción:</strong> {{ restaurant.description }}</p>
                             <p class="mb-1"><strong>Categorías:</strong>
                                 {% for categoria in restaurant.categorias.all %}

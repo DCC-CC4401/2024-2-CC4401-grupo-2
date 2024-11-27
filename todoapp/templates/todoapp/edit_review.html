@@ -24,6 +24,9 @@
                         <div class="col-md-4 text-right">
                             <ul class="list-inline user-menu">
                                 {% if user.is_authenticated %}
+                                    {% if user.tipo == "Propietario" %}
+                                        <li><a class="btn btn-primary" href="{% url 'my_restaurants' %}">Mis restaurantes</a></li>
+                                    {% endif %}
                                     <li><a class="btn btn-warning" href="{% url 'logout' %}">Cerrar Sesión</a></li>
                                 {% else %}
                                     <li><a class="btn btn-primary" href="{% url 'register_user' %}">Registrarse</a></li>
