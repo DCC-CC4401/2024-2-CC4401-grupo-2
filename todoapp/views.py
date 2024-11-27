@@ -260,7 +260,7 @@ def getGeoLoc(address):
     try:
         return [app.geocode(address).raw["lon"], app.geocode(address).raw["lat"]]
     except:
-        return getGeoLoc(address)
+        return [0,0]
 
 """
 Vista para listar los restaurantes de un propietario.
