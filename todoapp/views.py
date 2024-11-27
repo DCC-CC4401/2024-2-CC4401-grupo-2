@@ -73,6 +73,17 @@ def add_restaurant(request):
             return render(request, 'todoapp/register_restaurant.html', {'form': form})
 
 
+"""
+Vista para listar los restaurantes en función de ciertos filtros.
+
+- Se permite filtrar por comuna, categoría y rango de calificación.
+- Si no se especifican filtros, se listan todos los restaurantes.
+- Los datos de geolocalización de los restaurantes se procesan para mostrarlos en un mapa interactivo.
+- Se pasa el listado de comunas y categorías para que sean utilizados como filtros en la interfaz.
+
+Argumento:
+- request: La solicitud HTTP recibida por el servidor.
+"""
 def restaurant_list(request):
     comuna_id = request.GET.get('comuna', None)  # Obtener el ID de la comuna del query parameter
     categoria_id = request.GET.get('categoria', None)  # Obtener el ID de la categoría del query parameter
@@ -126,7 +137,17 @@ def restaurant_list(request):
         
     })
 
+"""
+Vista para iniciar sesión en el sistema.
 
+- Si el método es 'GET', se muestra el formulario de inicio de sesión.
+- Si el método es 'POST', se obtienen las credenciales ingresadas por el usuario y se intenta autenticar.
+  Si las credenciales son correctas, se inicia la sesión y redirige al listado de restaurantes.
+  Si las credenciales son incorrectas, redirige a la página de registro.
+
+Argumento:
+- request: La solicitud HTTP recibida por el servidor.
+"""
 def login_user(request):
     if request.method == 'GET':
         return render(request,"todoapp/login.html")
@@ -139,12 +160,29 @@ def login_user(request):
             return HttpResponseRedirect('/restaurant_list')
         else:
             return HttpResponseRedirect('/register')
+"""
+Vista para cerrar sesión en el sistema.
 
+- Finaliza la sesión activa del usuario y redirige al listado de restaurantes.
+
+Argumento:
+- request: La solicitud HTTP recibida por el servidor.
+"""
 def logout_user(request):
     logout(request)
     return HttpResponseRedirect('/restaurant_list')
 
+"""
+Vista para mostrar los detalles de un restaurante y permitir añadir reseñas.
 
+- Si el método es 'GET', se cargan los detalles del restaurante y las reseñas asociadas.
+- Si el método es 'POST' y el usuario está autenticado, se procesa el formulario para añadir una nueva reseña.
+- Se calcula el promedio de calificaciones basado en las reseñas existentes.
+
+Argumento:
+- request: La solicitud HTTP recibida por el servidor.
+- restaurant_id: ID del restaurante cuyos detalles se mostrarán.
+"""
 
 def restaurant_detail(request, restaurant_id):
     restaurant = get_object_or_404(Restaurant, id=restaurant_id)
@@ -168,6 +206,18 @@ def restaurant_detail(request, restaurant_id):
         'form': form,
         'average_rating':average_rating
     })
+
+"""
+Vista para editar o eliminar una reseña.
+
+- Solo el usuario que creó la reseña puede acceder a esta vista.
+- Permite editar el comentario y la calificación de una reseña.
+- Permite eliminar una reseña y actualizar el promedio del restaurante asociado.
+
+Argumento:
+- request: La solicitud HTTP recibida por el servidor.
+- review_id: ID de la reseña a editar o eliminar.
+"""
 
 @login_required
 def edit_review(request, review_id):
@@ -194,13 +244,34 @@ def edit_review(request, review_id):
         'form': form
     })
 
+"""
+Función para obtener la geolocalización de una dirección.
+- Si se encuentra la dirección, retorna una lista con la longitud y latitud.
+- Si ocurre algún error o no se encuentra la dirección, retorna [0, 0].
 
+Argumento:
+- address: Una cadena de texto que representa la dirección a geolocalizar.
+
+Retorna:
+- Una lista de dos elementos: [longitud, latitud].
+"""
 def getGeoLoc(address):
     app = Nominatim(user_agent="tutorial")
     try:
         return [app.geocode(address).raw["lon"], app.geocode(address).raw["lat"]]
     except:
         return [0, 0]
+
+"""
+Vista para listar los restaurantes de un propietario.
+
+- Solo los usuarios de tipo "Propietario" pueden acceder a esta vista.
+- Muestra una lista de restaurantes asociados al usuario autenticado.
+
+Argumento:
+- request: La solicitud HTTP recibida por el servidor.
+"""
+
 
 @login_required
 def my_restaurants(request):
